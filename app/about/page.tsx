@@ -114,7 +114,7 @@ const About: React.FC = () => {
           </div>
 
           <h3 className="text-3xl md:text-4xl font-display font-bold text-brand-black mb-6 md:mb-8">
-            The Advantage
+            The Advantages
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 not-prose">
             {[
