@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@theme {
+  /* FONT CONFIGURATION */
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui;
+  --font-display: var(--font-syne), sans-serif;
+  --font-mono: var(--font-mono), monospace;
+
+  /* HARDCODED COLORS (From your config) */
+  --color-brand-black: #0a0a0a;
+  --color-brand-dark: #171717;
+  --color-brand-gray: #737373;
+  --color-brand-light: #fafafa;
+  --color-brand-accent: #2563eb;
+
+  /* ANIMATIONS */
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-scroll: scroll 30s linear infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+@layer base {
+  body {
+    background-color: #fafafa; /* brand-light */
+    color: #0a0a0a; /* brand-black */
+    font-family: var(--font-manrope);
+  }
+
+  /* Headlines use the Display font (Syne) */
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-family: var(--font-syne);
+    font-weight: 800;
+    tracking: -0.02em;
+  }
+
+  /* Code/Stats use the Mono font */
+  code,
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+/* YOUR CUSTOM UTILITIES */
+@layer utilities {
+  .bg-grid {
+    background-size: 40px 40px;
+    background-image: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.05) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  }
+
+  .perspective-2000 {
+    perspective: 2000px;
+  }
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+}
