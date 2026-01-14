@@ -105,7 +105,7 @@ const About: React.FC = () => {
                 <div className="flex items-center gap-3 text-sm">
                   <MapPin size={16} className="text-brand-accent" />{" "}
                   <span>
-                    Serving Clients in{" "}
+                    Serving {`Client's `}in{" "}
                     <strong className="text-white">Dubai</strong>
                   </span>
                 </div>
