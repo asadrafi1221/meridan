@@ -1,4 +1,3 @@
-# .github/workflows/deploy-nextjs-pnpm.yml
 name: Deploy Next.js site to GitHub Pages
 
 on:
@@ -20,36 +19,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout code
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup Node.js
+      # Setup Node.js
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
 
-      # 3️⃣ Setup pnpm
+      # Install pnpm
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
+        run: npm install -g pnpm@10
 
-      # 4️⃣ Install dependencies
+      # Install dependencies
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # 5️⃣ Build Next.js
+      # Build Next.js
       - name: Build
         run: pnpm build
 
-      # 6️⃣ Prepare for GitHub Pages
+      # Upload artifact for GitHub Pages
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out # ensure your next.config.ts has output: 'export'
+          path: ./out
 
   deploy:
     runs-on: ubuntu-latest
