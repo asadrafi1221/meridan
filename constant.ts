@@ -2,6 +2,8 @@ import { Layout, Zap, Target, BarChart3 } from "lucide-react";
 import { NavItem, Service, CaseStudy, Testimonial } from "./types";
 
 export const NAV_ITEMS: NavItem[] = [
+  { label: "Home", path: "/" },
+
   { label: "Services", path: "/services" },
   { label: "How We Work", path: "/process" },
   { label: "Results", path: "/work" },

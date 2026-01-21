@@ -72,6 +72,8 @@ export default function Home() {
               </span>
             </motion.h1>
 
+            {/* title : Be found by customers, outrank competitors, and generate ROI with local SEO */}
+
             <motion.p
               variants={fastFadeUp}
               className="text-lg md:text-2xl text-gray-600 max-w-lg mb-12 font-light"
