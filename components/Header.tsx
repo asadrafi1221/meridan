@@ -28,6 +28,7 @@ import {
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { Button } from "./Button";
 import { NAV_ITEMS } from "@/constant";
+import { BRAND_GRADIENT } from "@/app/page";
 
 // --- DATA CONFIGURATION ---
 const SERVICE_ITEMS = [
@@ -138,7 +139,7 @@ export const Header = () => {
   return (
     <>
       <motion.div
-        className="fixed top-0 left-0 right-0 h-[3px] bg-[#2563eb] z-[110] origin-left"
+        className="fixed top-0 left-0 right-0 h-[3px]  z-[110] origin-left"
         style={{ scaleX }}
       />
 
@@ -148,18 +149,32 @@ export const Header = () => {
         }`}
       >
         <div
-          className={`max-w-7xl mx-auto transition-all duration-500 px-6 py-3 md:rounded-full border flex justify-between items-center ${
-            isScrolled
-              ? "bg-white/70 backdrop-blur-xl border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.05)]"
-              : "bg-transparent border-transparent"
-          }`}
+          className={`max-w-7xl text-white mx-auto px-6 py-3 md:rounded-full
+  flex justify-between items-center
+  transition-all duration-500
+  ${
+    isScrolled
+      ? `
+        backdrop-blur-xl
+        backdrop-filter
+        border border-white/20
+        shadow-lg
+        `
+      : "border-transparent"
+  }`}
         >
           {/* Logo */}
           <Link
             href="/"
-            className="text-2xl font-display font-extrabold tracking-tighter text-[#0a0a0a] z-[110]"
+            className="text-2xl font-display font-extrabold tracking-tighter text-white z-[110]"
           >
-            MERIDIAN<span className="text-[#2563eb]">.</span>
+            GMB-
+            <span
+              className="text-transparent bg-clip-text"
+              style={{ backgroundImage: BRAND_GRADIENT }}
+            >
+              OPTIMIZATION
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -176,7 +191,7 @@ export const Header = () => {
                     <button
                       className={`flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.15em] transition-all hover:text-[#2563eb] py-4 ${
                         pathname.includes("/services")
-                          ? "text-[#0a0a0a]"
+                          ? "text-white"
                           : "text-gray-500"
                       }`}
                     >

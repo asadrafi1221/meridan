@@ -1,6 +1,5 @@
 import React from "react";
 import { motion, HTMLMotionProps } from "framer-motion";
-import { Magnetic } from "./Magnetic";
 
 interface ButtonProps extends HTMLMotionProps<"button"> {
   variant?: "primary" | "secondary" | "text";
@@ -19,7 +18,7 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseStyles =
-    "inline-flex items-center justify-center font-bold tracking-wide transition-colors focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed rounded-full relative z-10";
+    "inline-flex items-center justify-center font-bold tracking-wide  focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed rounded-full relative z-10";
 
   const variants = {
     primary:
@@ -38,8 +37,8 @@ export const Button: React.FC<ButtonProps> = ({
   const buttonContent = (
     <motion.button
       whileTap={{ scale: 0.95 }}
-      transition={{ type: "spring", stiffness: 400, damping: 17 }}
       className={`
+        hover:scale-[0.9] transition-all duration-300
         ${baseStyles} 
         ${variants[variant]} 
         ${sizes[size]} 
@@ -54,5 +53,5 @@ export const Button: React.FC<ButtonProps> = ({
 
   if (variant === "text") return buttonContent;
 
-  return <Magnetic>{buttonContent}</Magnetic>;
+  return <>{buttonContent}</>;
 };
