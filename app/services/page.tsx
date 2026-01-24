@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useRef } from "react";
@@ -11,9 +10,10 @@ import {
   Check,
   ChevronRight,
   TrendingUp,
-  AlertCircle,
-  BarChart3,
-  Globe,
+  AlertTriangle,
+  XCircle,
+  ShieldAlert,
+  Zap,
 } from "lucide-react";
 import { Button } from "@/components/Button";
 import { TiltCard } from "@/components/TiltCard";
@@ -24,110 +24,114 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 // Register GSAP
 gsap.registerPlugin(ScrollTrigger);
 
-// --- CONSTANTS & DATA ---
+// --- DATA ---
 
 const BRAND_GRADIENT =
   "linear-gradient(87.22deg, rgb(200, 189, 255) -1.82%, rgb(186, 166, 255) 5.99%, rgb(103, 33, 255) 50.47%, rgb(234, 14, 150) 113.5%)";
 
 const PAIN_POINTS = [
   {
-    title: "Competitors Outranking You",
-    desc: "They appear in the Google Map Pack while you stay hidden on page 2.",
+    title: "Invisible on Maps",
+    desc: "Competitors rank in the 'Local 3-Pack' while you are buried on page 2.",
+    icon: XCircle,
+    color: "text-red-400",
+  },
+  {
+    title: "Leaking Leads",
+    desc: "Outdated info and missing phone numbers are costing you 40% of calls.",
+    icon: AlertTriangle,
+    color: "text-orange-400",
+  },
+  {
+    title: "Zero Authority",
+    desc: "Google ignores unverified profiles. No trust means no traffic.",
+    icon: ShieldAlert,
+    color: "text-yellow-400",
+  },
+  {
+    title: "Reputation Risk",
+    desc: "Unmanaged reviews and incorrect hours damage your brand permanently.",
     icon: TrendingUp,
-  },
-  {
-    title: "Missed Calls & Leads",
-    desc: "Outdated profiles make it hard for customers to find your number or hours.",
-    icon: AlertCircle,
-  },
-  {
-    title: "Lack of Trust",
-    desc: "Google rewards verified profiles. Unoptimized listings limit visibility.",
-    icon: Globe,
-  },
-  {
-    title: "Damaged Credibility",
-    desc: "Incorrect addresses or missing details weaken your brand reputation.",
-    icon: BarChart3,
+    color: "text-rose-400",
   },
 ];
 
 const PROCESS_STEPS = [
-  "Meet Your Marketing Expert",
-  "Build a Custom Plan",
-  "Custom Strategy Execution",
-  "Activate Your Hours",
-  "Focus on Results",
+  { title: "Audit", desc: "Deep Analysis" },
+  { title: "Strategy", desc: "Custom Roadmap" },
+  { title: "Execute", desc: "Implementation" },
+  { title: "Optimize", desc: "Refinement" },
+  { title: "Scale", desc: "Market Dominance" },
 ];
 
 const SERVICES_DATA = [
   {
     id: "gbp",
     category: "01. LOCAL DOMINANCE",
-    title: "Google Business Profile Optimization",
+    title: "Google Business Optimization",
     description:
-      "Outrank competitors and maximize local visibility. We optimize your profile to ensure you appear in the 'Local 3-Pack' when customers search nearby.",
+      "We don't just 'update' your profile. We engineer it to dominate the Local 3-Pack, driving high-intent foot traffic directly to your door.",
     icon: MapPin,
-    outcome: "300% More Footfall",
-    stack: ["Google Maps", "GMB API", "Review Mgmt", "Local SEO"],
+    outcome: "+300% Footfall",
+    stack: ["Maps API", "Review Mgmt", "Geo-Tagging"],
     checklist: [
-      "Profile Setup & Verification",
-      "Keyword & Category Optimization",
-      "Posts, Photos & Review Management",
-      "Insights & Performance Tracking",
+      "Verification & Claiming",
+      "Keyword Dominance Strategy",
+      "Automated Review Management",
+      "Weekly Anti-Spam Audits",
     ],
-    imageGradient: "from-blue-600/20 to-purple-600/20",
+    imageGradient: "from-blue-600/20 to-indigo-900/40",
   },
   {
     id: "web",
     category: "02. DIGITAL FOUNDATION",
-    title: "High-Performance Web Development",
+    title: "Conversion-First Web Dev",
     description:
-      "We don't just build websites; we build conversion engines tailored to your unique business model and optimized to meet user intent.",
+      "A website should sell, not just sit there. We build high-performance digital architectures designed to convert visitors into revenue.",
     icon: Layout,
     outcome: "Industry Leading Conversion",
-    stack: ["Next.js", "React", "Tailwind", "Framer Motion"],
+    stack: ["Next.js", "React", "Framer", "Vercel"],
     checklist: [
-      "Headless CMS Setup",
-      "Frontend Performance Optimization",
-      "SEO Technical Audit",
-      "PWA Capability",
+      "Headless CMS Architecture",
+      "< 100ms Load Times",
+      "Technical SEO Foundation",
+      "3D Interactive Elements",
     ],
-    imageGradient: "from-emerald-600/20 to-teal-600/20",
+    imageGradient: "from-emerald-600/20 to-cyan-900/40",
   },
   {
     id: "seo",
     category: "03. ORGANIC GROWTH",
     title: "Strategic SEO & Content",
     description:
-      "Align your website with user intent. We eliminate high bounce rates and engage high-intent traffic for maximum conversion.",
+      "Stop renting attention with ads. Own the search results. We align your infrastructure with user intent to capture traffic at the source.",
     icon: Search,
-    outcome: "Max Search Visibility",
-    stack: ["Ahrefs", "Semrush", "GSC", "SurferSEO"],
+    outcome: "Page 1 Dominance",
+    stack: ["Ahrefs", "Semrush", "SurferSEO"],
     checklist: [
-      "Keyword Strategy & Mapping",
-      "Content Calendar Creation",
-      "Backlink Outreach",
-      "Technical SEO Fixes",
+      "Topical Authority Mapping",
+      "High-DR Backlink Acquisition",
+      "Programmatic SEO Pages",
+      "Zero-Click Search Strategy",
     ],
-    imageGradient: "from-orange-600/20 to-red-600/20",
+    imageGradient: "from-orange-600/20 to-red-900/40",
   },
   {
     id: "ai",
     category: "04. AUTOMATION",
     title: "AI Receptionist & Agents",
     description:
-      "Never miss a lead again. Deploy intelligent voice and chat agents that handle inquiries, qualify leads, and book appointments 24/7.",
+      "The future of support is instant. Deploy intelligent voice and chat agents that qualify leads and book appointments while you sleep.",
     icon: Bot,
-    outcome: "24/7 Booking Automation",
+    outcome: "0% Missed Calls",
     stack: ["OpenAI", "Twilio", "Python", "Vapi"],
     checklist: [
-      "Custom Voice Training",
-      "CRM Integration",
+      "Natural Language Voice Ops",
+      "CRM & Calendar Sync",
       "24/7 Lead Qualification",
-      "Automated Appointment Booking",
+      "Instant SMS Follow-ups",
     ],
-    imageGradient: "from-pink-600/20 to-rose-600/20",
+    imageGradient: "from-pink-600/20 to-rose-900/40",
   },
 ];
 
@@ -136,72 +140,64 @@ export default function Services() {
 
   useGSAP(
     () => {
-      // Refresh ScrollTrigger to ensure positions are correct after render
       ScrollTrigger.refresh();
 
-      // 1. Hero Text Reveal - Robust Timeline
+      // 1. Hero Animations
       const tl = gsap.timeline();
       tl.fromTo(
-        ".hero-text",
-        { y: 60, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          stagger: 0.15,
-          ease: "power4.out",
-        },
-      ).fromTo(
-        ".hero-sub",
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.8 },
-        "-=0.5",
+        ".hero-element",
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: "power4.out" },
       );
 
-      // 2. Pain Points - Batch Animation for Reliability
-      // Use batch to ensure they animate even if scrolled quickly
-      ScrollTrigger.batch(".pain-card", {
-        start: "top 90%",
-        onEnter: (elements) => {
+      // 2. Pain Points (Alert Cards)
+      ScrollTrigger.batch(".alert-card", {
+        start: "top 85%",
+        onEnter: (batch) =>
           gsap.fromTo(
-            elements,
-            { opacity: 0, y: 50 },
+            batch,
+            { opacity: 0, y: 30, scale: 0.95 },
             {
               opacity: 1,
               y: 0,
-              duration: 0.6,
+              scale: 1,
               stagger: 0.1,
-              ease: "power2.out",
-              overwrite: true,
+              duration: 0.6,
+              ease: "back.out(1.5)",
             },
-          );
-        },
-        once: true, // Run once to prevent "stuck" issues on reverse scroll
+          ),
       });
 
-      // 3. Process Steps - Sequential Fade In
+      // 3. Process Steps (Connector Line)
       gsap.fromTo(
-        ".process-step",
-        { x: -30, opacity: 0 },
+        ".process-line",
+        { scaleX: 0 },
         {
-          x: 0,
-          opacity: 1,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".process-section",
-            start: "top 80%",
-            toggleActions: "play none none none", // Play once and stay
-          },
+          scaleX: 1,
+          duration: 1.5,
+          ease: "power3.inOut",
+          scrollTrigger: { trigger: ".process-section", start: "top 75%" },
         },
       );
 
-      // 4. Large Service Cards - Independent Triggers
-      const serviceCards = gsap.utils.toArray(".service-card");
-      serviceCards.forEach((card: any) => {
+      gsap.fromTo(
+        ".process-node",
+        { scale: 0, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          stagger: 0.2,
+          duration: 0.5,
+          ease: "back.out(2)",
+          scrollTrigger: { trigger: ".process-section", start: "top 75%" },
+        },
+      );
+
+      // 4. Service Spec Sheets
+      const services = gsap.utils.toArray(".service-row");
+      services.forEach((row: any) => {
         gsap.fromTo(
-          card,
+          row,
           { opacity: 0, y: 100 },
           {
             opacity: 1,
@@ -209,10 +205,9 @@ export default function Services() {
             duration: 0.8,
             ease: "power3.out",
             scrollTrigger: {
-              trigger: card,
-              start: "top 85%", // Triggers slightly earlier
-              end: "bottom 20%",
-              toggleActions: "play none none reverse", // Allows re-playing but ensures it settles
+              trigger: row,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
             },
           },
         );
@@ -224,228 +219,271 @@ export default function Services() {
   return (
     <div
       ref={containerRef}
-      className="bg-[#050505] text-white selection:bg-purple-500/30 w-full overflow-hidden min-h-screen"
+      className="bg-[#050505] text-white selection:bg-purple-500/30 w-full overflow-hidden min-h-screen font-sans"
     >
-      {/* Background Noise/Grid */}
-      <div
-        className="fixed inset-0 opacity-[0.03] pointer-events-none -z-10"
-        style={{
-          backgroundImage: `linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)`,
-          backgroundSize: "40px 40px",
-        }}
-      />
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_-20%,rgba(120,50,255,0.1),rgba(255,255,255,0))]" />
+      {/* Cinematic Background */}
+      <div className="fixed inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none mix-blend-overlay" />
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_-20%,rgba(120,50,255,0.08),rgba(255,255,255,0))]" />
 
       {/* --- HERO SECTION --- */}
-      <section className="relative pt-32 pb-20 px-6 min-h-[70vh] flex flex-col justify-center items-center text-center">
+      <section className="relative pt-32 pb-20 px-6 min-h-[60vh] flex flex-col justify-center items-center text-center">
         <div className="max-w-4xl mx-auto z-10">
-          <div className="hero-text inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md opacity-0">
-            <span className="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_10px_rgba(74,222,128,0.5)]" />
-            <span className="text-xs font-bold tracking-widest uppercase text-gray-300">
-              Agency Capabilities
+          <div className="hero-element inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+            </span>
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-300">
+              System Capabilities
             </span>
           </div>
 
-          <h1 className="hero-text opacity-0 text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-8 tracking-tighter leading-[1.1]">
-            Make Your Brand <br />
+          <h1 className="hero-element text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-8 tracking-tighter leading-[0.95]">
+            Engineering <br />
             <span
               className="text-transparent bg-clip-text"
               style={{ backgroundImage: BRAND_GRADIENT }}
             >
-              Stand Out.
+              Growth.
             </span>
           </h1>
 
-          <p className="hero-sub opacity-0 text-lg md:text-2xl text-[#a1a1aa] max-w-2xl mx-auto font-light leading-relaxed">
-            Maximize your local reach with Google Business Profile optimization.
-            We turn searches into customers.
+          <p className="hero-element text-lg md:text-2xl text-[#888] max-w-2xl mx-auto font-light leading-relaxed">
+            We don't offer a menu of services. We offer strategic levers to pull
+            for business dominance.
           </p>
         </div>
       </section>
 
-      {/* --- PAIN POINTS SECTION --- */}
-      <section className="pain-section py-20 px-6 relative border-y border-white/5 bg-[#080808]">
+      {/* --- PROBLEM / ALERT SECTION --- */}
+      <section className="py-24 px-6 relative bg-[#080808] border-y border-white/5">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-16 text-center">
-            <h2 className="text-3xl md:text-5xl font-display font-bold mb-4 text-white">
-              {`  Why Aren't Customers`} <br /> Finding You?
-            </h2>
-            <p className="text-gray-400">
-              Without optimization, you are invisible. Here is the risk.
-            </p>
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div>
+              <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-4">
+                System Critical <span className="text-red-500">Alerts</span>
+              </h2>
+              <p className="text-gray-500 max-w-md">
+                Ignoring these signals is why your competitors are winning.
+              </p>
+            </div>
+            <div className="h-px bg-white/10 flex-1 ml-8 mb-4 hidden md:block" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {PAIN_POINTS.map((pain, i) => (
               <div
                 key={i}
-                className="pain-card opacity-0 p-6 rounded-2xl bg-[#0F0F0F] border border-white/5 hover:border-red-500/20 transition-all duration-300 group"
+                className="alert-card group relative p-6 rounded-xl bg-[#0F0F0F] border border-white/5 hover:border-red-500/30 transition-all duration-300 overflow-hidden"
               >
-                <div className="w-12 h-12 rounded-lg bg-red-500/10 flex items-center justify-center mb-6 group-hover:bg-red-500/20 transition-colors">
-                  <pain.icon size={24} className="text-red-400" />
+                {/* Hover Glow */}
+                <div className="absolute inset-0 bg-gradient-to-br from-red-500/0 to-orange-500/0 group-hover:from-red-500/5 group-hover:to-orange-500/5 transition-colors duration-500" />
+
+                <div className="relative z-10">
+                  <div className="flex justify-between items-start mb-6">
+                    <pain.icon className={`w-8 h-8 ${pain.color}`} />
+                    <span className="text-[10px] font-mono text-gray-600">
+                      ERR_0{i + 1}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2">
+                    {pain.title}
+                  </h3>
+                  <p className="text-sm text-gray-500 leading-relaxed border-l-2 border-white/5 pl-3">
+                    {pain.desc}
+                  </p>
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-100">
-                  {pain.title}
-                </h3>
-                <p className="text-sm text-gray-500 leading-relaxed">
-                  {pain.desc}
-                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* --- PROCESS SECTION --- */}
-      <section className="process-section py-20 px-6 relative overflow-hidden">
+      {/* --- PROCESS PIPELINE --- */}
+      <section className="process-section py-24 px-6 relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-12">
-            <span className="text-purple-400 font-bold tracking-widest uppercase text-sm">
-              The Workflow
+          <div className="text-center mb-16">
+            <span className="text-purple-400 font-mono text-xs tracking-widest uppercase">
+              // Execution Pipeline
             </span>
-            <h2 className="text-3xl md:text-5xl font-display font-bold mt-2 text-white">
-              Here’s how it works.
-            </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+          <div className="relative hidden md:flex justify-between items-center max-w-5xl mx-auto">
+            {/* Connecting Line */}
+            <div className="process-line absolute top-6 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-50 origin-left" />
+
             {PROCESS_STEPS.map((step, i) => (
               <div
                 key={i}
-                className="process-step opacity-0 relative p-6 rounded-2xl bg-[#111] border border-white/5 hover:bg-[#151515] transition-colors"
+                className="process-node relative z-10 flex flex-col items-center gap-4 group"
               >
-                <div className="text-4xl font-display font-bold text-white/10 mb-4">
+                <div className="w-12 h-12 rounded-full bg-[#050505] border border-white/10 flex items-center justify-center group-hover:border-purple-500 transition-colors shadow-[0_0_20px_rgba(0,0,0,1)]">
+                  <div className="w-2 h-2 rounded-full bg-white group-hover:bg-purple-400 transition-colors" />
+                </div>
+                <div className="text-center">
+                  <h3 className="text-sm font-bold text-white">{step.title}</h3>
+                  <p className="text-[10px] text-gray-500 uppercase tracking-wider">
+                    {step.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Mobile Vertical Process */}
+          <div className="md:hidden space-y-6">
+            {PROCESS_STEPS.map((step, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-4 p-4 rounded-lg bg-white/5 border border-white/5"
+              >
+                <div className="text-purple-400 font-mono text-xs">
                   0{i + 1}
                 </div>
-                <h3 className="text-lg font-bold text-gray-200">{step}</h3>
-                {i !== PROCESS_STEPS.length - 1 && (
-                  <div className="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 z-10 text-gray-700">
-                    <ChevronRight size={20} />
-                  </div>
-                )}
+                <div>
+                  <h3 className="text-sm font-bold text-white">{step.title}</h3>
+                  <p className="text-xs text-gray-500">{step.desc}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* --- MAIN SERVICES LIST --- */}
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-20 space-y-32">
+      {/* --- SPEC SHEET SERVICES --- */}
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-20 space-y-40">
         {SERVICES_DATA.map((service, index) => (
           <div
             key={service.id}
-            className={`service-card opacity-0 flex flex-col lg:flex-row gap-12 lg:gap-20 items-center ${
+            className={`service-row flex flex-col lg:flex-row gap-12 lg:gap-20 items-stretch ${
               index % 2 !== 0 ? "lg:flex-row-reverse" : ""
             }`}
           >
-            {/* Text Content */}
-            <div className="flex-1">
+            {/* Text / Spec Sheet */}
+            <div className="flex-1 flex flex-col justify-center">
               <div className="flex items-center gap-3 mb-6">
-                <span className="text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
+                <div className="w-8 h-px bg-purple-500" />
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-purple-400">
                   {service.category}
                 </span>
-                <div className="h-px w-12 bg-gray-800" />
               </div>
 
-              <h2 className="text-3xl md:text-5xl font-display font-bold mb-6 text-white leading-tight">
+              <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-white leading-[1.1]">
                 {service.title}
               </h2>
 
-              <p className="text-lg text-[#a1a1aa] mb-8 leading-relaxed font-light">
+              <p className="text-lg text-gray-400 mb-8 leading-relaxed font-light border-l border-white/10 pl-6">
                 {service.description}
               </p>
 
-              {/* Tech Stack Pills */}
-              <div className="flex flex-wrap gap-2 mb-8">
-                {service.stack.map((tech, tIdx) => (
-                  <span
-                    key={tIdx}
-                    className="px-3 py-1 bg-[#151515] text-gray-400 text-xs font-bold rounded-md border border-white/5"
-                  >
-                    {tech}
+              {/* The "Spec Sheet" Container */}
+              <div className="bg-[#111]/50 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
+                {/* Header */}
+                <div className="bg-white/5 px-6 py-3 border-b border-white/5 flex justify-between items-center">
+                  <span className="text-[10px] font-mono text-gray-500 uppercase">
+                    System_Specs
                   </span>
-                ))}
+                  <div className="flex gap-1.5">
+                    <div className="w-2 h-2 rounded-full bg-red-500/20" />
+                    <div className="w-2 h-2 rounded-full bg-yellow-500/20" />
+                    <div className="w-2 h-2 rounded-full bg-green-500/20" />
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-6 md:p-8">
+                  <div className="mb-6">
+                    <span className="text-xs font-bold text-white mb-3 block">
+                      Tech Stack
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {service.stack.map((t, i) => (
+                        <span
+                          key={i}
+                          className="px-2 py-1 bg-white/5 border border-white/5 rounded text-[10px] font-mono text-gray-400"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    {service.checklist.map((item, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center gap-3 group/item"
+                      >
+                        <div className="w-4 h-4 rounded bg-purple-500/10 flex items-center justify-center border border-purple-500/20 group-hover/item:border-purple-500/50 transition-colors">
+                          <Check size={10} className="text-purple-400" />
+                        </div>
+                        <span className="text-sm text-gray-300 font-light">
+                          {item}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Footer Outcome */}
+                <div className="bg-purple-900/10 px-6 py-4 border-t border-purple-500/10 flex justify-between items-center">
+                  <span className="text-xs text-purple-200">
+                    PROJECTED OUTCOME
+                  </span>
+                  <span className="text-sm font-bold text-white tracking-wide">
+                    {service.outcome}
+                  </span>
+                </div>
               </div>
 
-              {/* Checklist Box */}
-              <div className="bg-[#111] p-6 md:p-8 rounded-3xl border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors">
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${service.imageGradient} opacity-5 group-hover:opacity-10 transition-opacity duration-500`}
-                />
-
-                <span className="block text-xs font-bold uppercase tracking-widest text-white mb-6 relative z-10">
-                  What&apos;s Included
-                </span>
-
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-4 relative z-10">
-                  {service.checklist.map((item, i) => (
-                    <li
-                      key={i}
-                      className="flex items-start gap-3 text-gray-400 text-sm"
-                    >
-                      <div className="mt-0.5 w-4 h-4 rounded-full bg-white/10 flex items-center justify-center text-white shrink-0">
-                        <Check size={10} strokeWidth={3} />
-                      </div>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-8 pt-6 border-t border-white/5 flex items-center justify-between relative z-10">
-                  <div>
-                    <span className="block text-[10px] uppercase text-gray-500 font-bold tracking-wider mb-1">
-                      Expected Outcome
-                    </span>
-                    <span className="text-lg font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">
-                      {service.outcome}
-                    </span>
-                  </div>
-                  <Link href="/contact">
-                    <button className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center hover:scale-110 transition-transform shadow-[0_0_15px_rgba(255,255,255,0.3)]">
-                      <ChevronRight size={18} />
-                    </button>
-                  </Link>
-                </div>
+              <div className="mt-8">
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center gap-2 text-white font-semibold border-b border-white/20 pb-1 hover:border-white transition-all"
+                >
+                  Initialize Project
+                  <ChevronRight
+                    size={16}
+                    className="group-hover:translate-x-1 transition-transform"
+                  />
+                </Link>
               </div>
             </div>
 
-            {/* Visual Content (Tilt Card) */}
-            <div className="flex-1 w-full min-h-[400px] lg:h-[600px]">
+            {/* Visual (Tilt Card) */}
+            <div className="flex-1 min-h-[400px] lg:min-h-[600px]">
               <TiltCard intensity={15} className="h-full">
-                <div className="relative group w-full h-full rounded-[2rem] overflow-visible">
-                  {/* Decorative Back Layer */}
-                  <div className="absolute inset-0 bg-[#1a1a1a] translate-x-4 translate-y-4 rounded-[2rem] -z-10 transition-transform duration-500 group-hover:translate-x-6 group-hover:translate-y-6 border border-white/5"></div>
+                <div className="w-full h-full rounded-2xl border border-white/10 bg-[#0c0c0c] relative overflow-hidden group">
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${service.imageGradient} opacity-20`}
+                  />
 
-                  {/* Main Card */}
-                  <div className="h-full overflow-hidden rounded-[2rem] border border-white/10 bg-[#0A0A0A] relative flex items-center justify-center">
-                    {/* Background Gradient */}
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-br ${service.imageGradient} opacity-20`}
-                    />
+                  {/* Abstract Grid Background */}
+                  <div
+                    className="absolute inset-0 opacity-10"
+                    style={{
+                      backgroundImage:
+                        "radial-gradient(circle, #fff 1px, transparent 1px)",
+                      backgroundSize: "24px 24px",
+                    }}
+                  />
 
-                    {/* Abstract Icon/Graphic Center */}
-                    <div className="relative z-10 transform group-hover:scale-110 transition-transform duration-700">
-                      <div className="w-32 h-32 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center shadow-2xl">
-                        <service.icon size={48} className="text-white" />
-                      </div>
+                  {/* Center Graphic */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-40 h-40 rounded-full border border-white/10 flex items-center justify-center bg-white/5 backdrop-blur-md shadow-2xl group-hover:scale-110 transition-transform duration-700">
+                      <service.icon
+                        size={64}
+                        className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]"
+                      />
                     </div>
+                  </div>
 
-                    {/* Grid Overlay */}
-                    <div
-                      className="absolute inset-0 opacity-20 pointer-events-none"
-                      style={{
-                        backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-                        backgroundSize: "30px 30px",
-                      }}
-                    />
-
-                    {/* Floating Label */}
-                    <div className="absolute bottom-8 left-8 right-8">
-                      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-xs font-bold text-gray-300">
-                        <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                        <span>Active Service</span>
-                      </div>
-                    </div>
+                  {/* Corner Details */}
+                  <div className="absolute top-6 right-6">
+                    <Zap className="text-yellow-400 w-5 h-5 opacity-50" />
+                  </div>
+                  <div className="absolute bottom-6 left-6 font-mono text-[10px] text-gray-600">
+                    ID: {service.id.toUpperCase()}_SYS_01
                   </div>
                 </div>
               </TiltCard>
@@ -454,31 +492,30 @@ export default function Services() {
         ))}
       </div>
 
-      {/* --- CTA SECTION --- */}
-      <section className="relative py-32 px-6 text-center overflow-hidden">
-        {/* Glow */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-purple-600/10 blur-[120px] rounded-full pointer-events-none" />
+      {/* --- CTA --- */}
+      <section className="relative py-40 px-6 text-center">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/20 blur-[150px] rounded-full pointer-events-none" />
 
-        <div className="max-w-4xl mx-auto relative z-10">
-          <h2 className="text-4xl md:text-7xl font-display font-extrabold mb-8 text-white tracking-tight">
-            Stop guessing. <br />
+        <div className="relative z-10 max-w-3xl mx-auto">
+          <h2 className="text-5xl md:text-8xl font-display font-bold mb-8 tracking-tighter">
+            READY TO <br />
             <span
               className="text-transparent bg-clip-text"
               style={{ backgroundImage: BRAND_GRADIENT }}
             >
-              Start growing.
+              DOMINATE?
             </span>
           </h2>
-          <p className="text-lg md:text-2xl text-[#666] mb-12 font-light">
-            {`  Your competition isn't waiting. Neither should you.`}
+          <p className="text-xl text-gray-400 mb-12 font-light">
+            We only work with brands ready to scale. Are you one of them?
           </p>
           <Link href="/contact">
             <Button
               size="lg"
               style={{ background: BRAND_GRADIENT }}
-              className="px-12 py-6 text-lg shadow-[0_0_40px_rgba(168,85,247,0.3)] text-white border-0 hover:scale-105 transition-all duration-300 font-bold"
+              className="px-12 py-6 text-lg shadow-[0_0_50px_rgba(168,85,247,0.4)] text-white border-0 hover:scale-105 transition-all duration-300 font-bold"
             >
-              Discuss Your Needs
+              Book Strategy Call
             </Button>
           </Link>
         </div>

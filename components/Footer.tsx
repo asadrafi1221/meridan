@@ -2,51 +2,67 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowUpRight, Mail, Instagram, Twitter, Linkedin } from "lucide-react";
+import {
+  ArrowUpRight,
+  Mail,
+  Instagram,
+  Twitter,
+  Linkedin,
+  Facebook,
+  Youtube,
+  Pin,
+  ArrowRight, // Added for the button
+} from "lucide-react";
+
+// Bringing in the gradient for consistency
+const BRAND_GRADIENT =
+  "linear-gradient(87.22deg, rgb(200, 189, 255) -1.82%, rgb(186, 166, 255) 5.99%, rgb(103, 33, 255) 50.47%, rgb(234, 14, 150) 113.5%)";
+
+const SOCIAL_LINKS = [
+  { name: "Facebook", icon: Facebook, href: "#" },
+  { name: "Instagram", icon: Instagram, href: "#" },
+  { name: "LinkedIn", icon: Linkedin, href: "#" },
+  { name: "YouTube", icon: Youtube, href: "#" },
+  { name: "X.com", icon: Twitter, href: "#" },
+];
 
 export const Footer = () => {
   return (
-    <footer className="w-full pt-20 px-4 md:px-6">
-      {/* CTA Box with Cinematic Gradient */}
-      <div className="max-w-7xl mx-auto relative z-10 translate-y-12">
-        <div className="bg-gradient-to-br from-[#0a0a0a] via-[#171717] to-[#2563eb] rounded-[2rem] md:rounded-[3rem] p-8 md:p-16 border border-white/5 shadow-2xl">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
-            <div className="max-w-2xl">
-              <h2 className="text-3xl md:text-6xl font-display font-bold text-white leading-[1.1] mb-6">
-                {` LET'S BUILD THE`} <br /> NEXT CHAPTER.
-              </h2>
-              <p className="text-gray-400 text-lg md:text-xl font-light">
-                Premium digital execution for brands that refuse to be average.
-              </p>
-            </div>
-            <Link href="/contact" className="group">
-              <div className="bg-white text-[#0a0a0a] p-6 md:p-10 rounded-full aspect-square flex flex-col items-center justify-center transition-transform hover:scale-105 active:scale-95">
-                <ArrowUpRight
-                  size={32}
-                  className="group-hover:rotate-45 transition-transform"
-                />
-                <span className="font-bold text-xs mt-2 uppercase tracking-tighter">
-                  Start
-                </span>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Dark Footer */}
-      <div className="bg-[#0a0a0a] rounded-t-[3rem] pt-32 pb-12 px-6 md:px-12 -mx-4 md:-mx-6">
+    <footer className="w-full px-4 md:px-6 bg-[#050505] text-white border-t border-white/5">
+      <div className="pt-24 pb-12">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
             {/* Brand */}
             <div className="flex flex-col gap-6">
-              <span className="text-3xl font-display font-black text-white">
-                MERIDIAN<span className="text-[#2563eb]">.</span>
+              <span className="text-sm font-display font-black text-white tracking-tight">
+                GMB
+                <span
+                  className="text-transparent text-sm pl-2 bg-clip-text"
+                  style={{ backgroundImage: BRAND_GRADIENT }}
+                >
+                  OPTIMIZATION
+                </span>
               </span>
-              <p className="text-gray-500 text-sm leading-relaxed">
+              <p className="text-[#a1a1aa] text-sm leading-relaxed max-w-xs">
                 A strategic design and technology partner for companies looking
                 to scale at global standards.
               </p>
+
+              <div className="flex flex-wrap gap-3 mb-8">
+                {SOCIAL_LINKS.map((item, i) => (
+                  <a
+                    key={i}
+                    href={item.href}
+                    aria-label={item.name}
+                    className="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-purple-500/50 hover:text-purple-400 transition-all duration-300 group"
+                  >
+                    <item.icon
+                      size={18}
+                      className="group-hover:scale-110 transition-transform"
+                    />
+                  </a>
+                ))}
+              </div>
             </div>
 
             {/* Links 1 */}
@@ -54,18 +70,18 @@ export const Footer = () => {
               <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#737373] mb-6">
                 Navigation
               </h4>
-              <ul className="flex flex-col gap-4 text-gray-400 text-sm font-medium">
+              <ul className="flex flex-col gap-4 text-[#a1a1aa] text-sm font-medium">
                 {["Services", "Case Studies", "Our Process", "Waitlist"].map(
                   (item) => (
                     <li key={item}>
                       <Link
                         href="#"
-                        className="hover:text-white transition-colors"
+                        className="hover:text-white transition-colors hover:translate-x-1 inline-block duration-200"
                       >
                         {item}
                       </Link>
                     </li>
-                  )
+                  ),
                 )}
               </ul>
             </div>
@@ -75,52 +91,65 @@ export const Footer = () => {
               <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#737373] mb-6">
                 Inquiries
               </h4>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-4">
                 <a
                   href="mailto:hello@meridian.agency"
-                  className="text-white text-lg font-medium hover:text-[#2563eb] transition-colors flex items-center gap-2"
+                  className="text-white text-lg font-medium hover:text-purple-400 transition-colors flex items-center gap-2 group"
                 >
-                  <Mail size={16} /> hello@meridian.agency
+                  <Mail
+                    size={16}
+                    className="group-hover:-translate-y-1 transition-transform duration-300"
+                  />
+                  hello@meridian.agency
                 </a>
-                <p className="text-gray-500 text-sm mt-2">
-                  Lahore, Pakistan • Global Operations
+                <p className="text-[#555] text-xs leading-relaxed">
+                  Lahore, Pakistan <br /> Global Operations
                 </p>
               </div>
             </div>
 
-            {/* Socials */}
+            {/* Socials & Waitlist */}
             <div>
-              <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#737373] mb-6">
-                Connect
-              </h4>
-              <div className="flex gap-4">
-                {[Instagram, Twitter, Linkedin].map((Icon, i) => (
-                  <a
-                    key={i}
-                    href="#"
-                    className="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-[#2563eb] hover:border-[#2563eb] transition-all text-white"
+              {/* Waitlist Input */}
+              <div>
+                <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#737373] mb-4">
+                  Join The Waitlist
+                </h4>
+                <form className="flex flex-col gap-3">
+                  <input
+                    type="email"
+                    placeholder="Enter your email address"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#555] focus:outline-none focus:border-purple-500/50 focus:bg-white/10 transition-all"
+                  />
+                  <button
+                    className="w-full py-3 rounded-xl font-bold text-xs uppercase tracking-widest text-white shadow-[0_0_20px_rgba(168,85,247,0.2)] hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+                    style={{ background: BRAND_GRADIENT }}
                   >
-                    <Icon size={20} />
-                  </a>
-                ))}
+                    Join Now <ArrowRight size={14} />
+                  </button>
+                </form>
               </div>
             </div>
           </div>
 
           {/* Copyright Bar */}
           <div className="mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-gray-600 text-xs">
-              © {new Date().getFullYear()} Meridian Digital. All rights
+            <p className="text-[#555] text-xs">
+              © {new Date().getFullYear()} GMB Optimization. All rights
               reserved.
             </p>
-            <div className="flex gap-8 text-gray-600 text-xs">
-              <Link href="#">Privacy</Link>
-              <Link href="#">Terms</Link>
+            <div className="flex gap-8 text-[#555] text-xs font-medium">
+              <Link href="#" className="hover:text-white transition-colors">
+                Privacy
+              </Link>
+              <Link href="#" className="hover:text-white transition-colors">
+                Terms
+              </Link>
               <button
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                className="text-white font-bold hover:text-[#2563eb] transition-colors"
+                className="text-white hover:text-purple-400 transition-colors flex items-center gap-1"
               >
-                BACK TO TOP ↑
+                BACK TO TOP <ArrowUpRight size={12} />
               </button>
             </div>
           </div>

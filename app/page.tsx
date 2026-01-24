@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-// Added MapPin, Bot, Layout for the new services
 import {
   TrendingUp,
   ArrowUpRight,
@@ -14,6 +13,14 @@ import {
   Layout,
   Search,
   Database,
+  Target,
+  PenTool,
+  RefreshCw,
+  Rocket,
+  Quote,
+  Plus,
+  Minus,
+  Star,
 } from "lucide-react";
 import { Button } from "../components/Button";
 import {
@@ -25,8 +32,13 @@ import {
 import { TiltCard } from "../components/TiltCard";
 import { Cube } from "../components/Shapes3D";
 import { BentoGrid } from "../components/BentoGrid";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// The specific gradient provided
+// Register GSAP
+gsap.registerPlugin(ScrollTrigger);
+
 export const BRAND_GRADIENT =
   "linear-gradient(87.22deg, rgb(200, 189, 255) -1.82%, rgb(186, 166, 255) 5.99%, rgb(103, 33, 255) 50.47%, rgb(234, 14, 150) 113.5%)";
 
@@ -40,7 +52,133 @@ const ROTATING_WORDS = [
   "For Business Visibility",
 ];
 
-// New Capabilities Data
+// --- HERO REVIEWS ---
+const HERO_REVIEWS = [
+  {
+    text: "GMBOPTIMIZATION completely transformed our online presence. Our comprehensive SEO strategy led to a 200% increase in leads within 3 months.",
+    name: "Sarah Jenkins",
+    role: "CEO, Hudson Retail",
+    img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100&h=100",
+  },
+  {
+    text: "The team is professional, responsive, and incredibly talented. Our new website is lightning fast and looks amazing.",
+    name: "Michael Rodriguez",
+    role: "Founder, TechStream",
+    img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=100&h=100",
+  },
+  {
+    text: "Finally an agency that delivers on their promises. The ROI we've seen from the Google Business Profile optimization is unmatched.",
+    name: "Emily Chen",
+    role: "Director, Chen Dental",
+    img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=100&h=100",
+  },
+];
+
+// --- FAQ DATA ---
+const FAQ_DATA = [
+  {
+    question: "Which company is best for digital marketing?",
+    answer:
+      "GMB OPTIMIZATION is a trusted partner for all your digital marketing needs. We offer Content, SEO, PPC, SMM, Email marketing and many other services to help you assist and take the first step in your growth journey.",
+  },
+  {
+    question:
+      "What key factors should be considered when choosing a digital marketing company?",
+    answer:
+      "When choosing a digital marketing company, check its customer reviews, case studies, experience in the industry, and the services it offers. Also, communicate with them to see how transparent and client-focused they are.",
+  },
+  {
+    question: "How much does it cost to hire an Internet marketing agency?",
+    answer:
+      "The cost of hiring internet marketing agencies and digital marketing companies varies depending on the project and the service you want to buy. Thus, to know the specific cost of a particular service, you can schedule a consultation call with the company.",
+  },
+];
+
+// --- SUCCESS STORIES DATA ---
+const SUCCESS_STORIES = [
+  {
+    id: 1,
+    company: "Fine Paint Works",
+    category: "House Painter • Wantirna South",
+    image:
+      "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=2070&auto=format&fit=crop",
+    quote:
+      "We were invisible on Maps before. Now we're the #1 result for 'House Painter near me'. Our phone hasn't stopped ringing.",
+    stats: [
+      { label: "Local Ranking", value: "#1 Spot" },
+      { label: "Monthly Calls", value: "300+" },
+      { label: "Avg Review", value: "4.9/5" },
+    ],
+    highlight: "text-blue-400",
+    gradient: "from-blue-500/10 to-transparent",
+  },
+  {
+    id: 2,
+    company: "Metro HVAC Services",
+    category: "Home Services • Sydney",
+    image:
+      "https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2070&auto=format&fit=crop",
+    quote:
+      "We were struggling to get calls in the off-season. GMBOPTIMIZATION completely revamped our Google Ads and now we're booked out 3 weeks in advance.",
+    stats: [
+      { label: "Lead Increase", value: "240%" },
+      { label: "Lower CPC", value: "35%" },
+      { label: "Map Ranking", value: "Top 3" },
+    ],
+    highlight: "text-orange-400",
+    gradient: "from-orange-500/10 to-transparent",
+  },
+  {
+    id: 3,
+    company: "Elite Law Firm",
+    category: "Legal • Brisbane",
+    image:
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop",
+    quote:
+      "Our previous website was slow and outdated. The new site isn't just beautiful—it actually converts visitors into clients. Best investment we've made.",
+    stats: [
+      { label: "Load Speed", value: "< 1.5s" },
+      { label: "Organic Growth", value: "150%" },
+      { label: "New Inquiries", value: "50+" },
+    ],
+    highlight: "text-purple-400",
+    gradient: "from-purple-500/10 to-transparent",
+  },
+];
+
+const METHODOLOGY_STEPS = [
+  {
+    id: 1,
+    title: "ANALYSIS",
+    desc: "Deep dive into your market, competitors, and current digital footprint.",
+    icon: Search,
+  },
+  {
+    id: 2,
+    title: "STRATEGY",
+    desc: "Custom roadmap designed to hit your specific KPIs and revenue goals.",
+    icon: Target,
+  },
+  {
+    id: 3,
+    title: "EXECUTION",
+    desc: "Building high-converting assets and launching targeted campaigns.",
+    icon: PenTool,
+  },
+  {
+    id: 4,
+    title: "OPTIMIZE",
+    desc: "Continuous A/B testing and data refinement to lower costs and boost leads.",
+    icon: RefreshCw,
+  },
+  {
+    id: 5,
+    title: "GROWTH",
+    desc: "Scaling what works to dominate your local or national market.",
+    icon: Rocket,
+  },
+];
+
 const CAPABILITIES = [
   {
     id: "gbp",
@@ -98,14 +236,128 @@ export default function Home() {
   const y2 = useTransform(scrollY, [0, 500], [0, -80]);
 
   const [index, setIndex] = useState(0);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
+  // Hero Review Index State
+  const [heroReviewIndex, setHeroReviewIndex] = useState(0);
+
+  // Refs for GSAP
+  const methodologyRef = useRef<HTMLDivElement>(null);
+  const storiesRef = useRef<HTMLDivElement>(null);
+  const faqRef = useRef<HTMLDivElement>(null);
+
+  // Rotate Hero Words
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prevIndex) => (prevIndex + 1) % ROTATING_WORDS.length);
     }, 2000);
-
     return () => clearInterval(interval);
   }, []);
+
+  // Rotate Hero Reviews (5 Seconds)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHeroReviewIndex((prev) => (prev + 1) % HERO_REVIEWS.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // GSAP: Methodology
+  useGSAP(
+    () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: methodologyRef.current,
+          start: "top 75%",
+          toggleActions: "play none none reverse",
+        },
+      });
+
+      tl.fromTo(
+        ".method-line",
+        { scaleX: 0, transformOrigin: "left center" },
+        { scaleX: 1, duration: 1.5, ease: "power3.inOut" },
+      );
+
+      tl.fromTo(
+        ".method-circle",
+        { scale: 0, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 0.5,
+          stagger: 0.15,
+          ease: "back.out(1.7)",
+        },
+        "-=1.0",
+      );
+
+      tl.fromTo(
+        ".method-content",
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          stagger: 0.15,
+          ease: "power2.out",
+        },
+        "-=0.8",
+      );
+    },
+    { scope: methodologyRef },
+  );
+
+  // GSAP: Success Stories
+  useGSAP(
+    () => {
+      ScrollTrigger.refresh();
+      gsap.fromTo(
+        ".story-card",
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: storiesRef.current,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          },
+        },
+      );
+    },
+    { scope: storiesRef },
+  );
+
+  // GSAP: FAQ
+  useGSAP(
+    () => {
+      gsap.fromTo(
+        ".faq-item",
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: faqRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        },
+      );
+    },
+    { scope: faqRef },
+  );
+
+  const toggleFaq = (idx: number) => {
+    setOpenFaq(openFaq === idx ? null : idx);
+  };
 
   return (
     <div className="overflow-x-hidden w-full bg-[#050505] text-white selection:bg-purple-500/30">
@@ -217,62 +469,73 @@ export default function Home() {
                   <div className="absolute -top-20 -right-20 w-[150px] h-[150px] bg-purple-500/20 blur-[50px] rounded-full pointer-events-none" />
 
                   <div className="relative z-10 h-full flex flex-col justify-between">
-                    <div className="flex justify-between items-center mb-8">
+                    <div className="flex justify-between items-center mb-6">
                       <div className="font-display font-bold text-xl tracking-tight text-white">
-                        MERIDIAN_OS
+                        CLIENT_FEED
                       </div>
-                      <div className="w-2 h-2 bg-purple-400 rounded-full shadow-[0_0_8px_rgba(168,85,247,0.8)]" />
+                      <div className="flex gap-2">
+                        <div className="w-2 h-2 bg-green-400 rounded-full shadow-[0_0_8px_rgba(74,222,128,0.8)] animate-pulse" />
+                      </div>
                     </div>
-                    <div className="space-y-3">
-                      {[
-                        {
-                          icon: Globe,
-                          label: "Global Traffic",
-                          val: "2.4M",
-                          color: "text-indigo-400",
-                          bg: "bg-indigo-400/10",
-                        },
-                        {
-                          icon: "Database", // Adjusted to string to match existing Lucide usage if dynamic, else import Database
-                          label: "Server Load",
-                          val: "42ms",
-                          color: "text-purple-400",
-                          bg: "bg-purple-400/10",
-                        },
-                        {
-                          icon: Code,
-                          label: "Deploys",
-                          val: "15/day",
-                          color: "text-pink-400",
-                          bg: "bg-pink-400/10",
-                        },
-                      ].map((item, i) => (
-                        <div
-                          key={i}
-                          className="bg-[#111111] hover:bg-[#161616] transition-colors rounded-xl p-3 border border-white/5 flex flex-col gap-1"
+
+                    {/* Animated Review Container (1 At a time) */}
+                    <div className="flex-1 flex flex-col justify-center relative min-h-[200px]">
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={heroReviewIndex}
+                          initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: -30, scale: 0.95 }}
+                          transition={{ duration: 0.5, ease: "easeOut" }}
+                          className="absolute inset-0 flex flex-col justify-center"
                         >
-                          <div className="flex items-center gap-2 mb-1">
-                            <div className={`p-1 rounded-md ${item.bg}`}>
-                              {/* Handle icon rendering safely if mix of strings/components */}
-                              {typeof item.icon === "string" ? (
-                                <Database size={12} className={item.color} />
-                              ) : (
-                                <item.icon size={12} className={item.color} />
-                              )}
+                          <div className="bg-[#111111] transition-colors rounded-xl p-6 border border-white/5 flex flex-col gap-4 shadow-2xl">
+                            <div className="flex justify-between items-start">
+                              <div className="flex items-center gap-3">
+                                <img
+                                  src={HERO_REVIEWS[heroReviewIndex].img}
+                                  alt={HERO_REVIEWS[heroReviewIndex].name}
+                                  className="w-10 h-10 rounded-full border border-white/10 object-cover"
+                                />
+                                <div>
+                                  <div className="text-sm font-bold text-white">
+                                    {HERO_REVIEWS[heroReviewIndex].name}
+                                  </div>
+                                  <div className="text-[10px] text-[#666]">
+                                    {HERO_REVIEWS[heroReviewIndex].role}
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="flex gap-0.5">
+                                {[...Array(5)].map((_, s) => (
+                                  <Star
+                                    key={s}
+                                    size={12}
+                                    fill="currentColor"
+                                    className="text-yellow-500"
+                                  />
+                                ))}
+                              </div>
                             </div>
-                            <span className="text-[9px] uppercase text-[#666] tracking-widest font-semibold">
-                              {item.label}
-                            </span>
+                            <p className="text-xs text-gray-300 font-light leading-relaxed">
+                              {`"${HERO_REVIEWS[heroReviewIndex].text}"`}
+                            </p>
                           </div>
-                          <div className="text-lg font-mono text-gray-200 pl-1">
-                            {item.val}
-                          </div>
-                        </div>
-                      ))}
+                        </motion.div>
+                      </AnimatePresence>
                     </div>
-                    <div className="pt-6 border-t border-white/10 flex justify-between text-[10px] text-[#555]">
-                      <span>Status: Operational</span>
-                      <span>LHR • NY • LDN</span>
+
+                    <div className="pt-4 border-t border-white/10 flex justify-between text-[10px] text-[#555]">
+                      <span>Live Updates</span>
+                      {/* Simple Progress Indicators */}
+                      <div className="flex gap-1">
+                        {HERO_REVIEWS.map((_, i) => (
+                          <div
+                            key={i}
+                            className={`w-1 h-1 rounded-full transition-colors duration-300 ${i === heroReviewIndex ? "bg-purple-500" : "bg-white/10"}`}
+                          />
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -319,9 +582,9 @@ export default function Home() {
               viewport={{ once: true }}
               className="text-4xl md:text-6xl font-display font-bold text-white mb-4"
             >
-              Why <br />
+              Why
               <span
-                className="text-transparent relative bg-clip-text"
+                className="text-transparent text-xl  lg:text-2xl 2xl:text-3xl 2xl:pl-3 relative bg-clip-text"
                 style={{ backgroundImage: BRAND_GRADIENT }}
               >
                 GBP OPTIMIZATION?
@@ -345,6 +608,64 @@ export default function Home() {
         </div>
       </section>
 
+      {/* --- METHODOLOGY SECTION --- */}
+      <section
+        ref={methodologyRef}
+        className="py-24 md:py-32 px-4 md:px-6 bg-[#050505] relative border-t border-white/5"
+      >
+        <div className="max-w-7xl mx-auto relative z-10 text-center">
+          {/* Header */}
+          <div className="mb-20">
+            <h3 className="text-pink-500 font-bold tracking-[0.2em] text-sm uppercase mb-3">
+              How We Work
+            </h3>
+            <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-6">
+              OUR METHODOLOGY
+              <span className="block w-16 h-1.5 bg-pink-600 mx-auto mt-4 rounded-full" />
+            </h2>
+            <p className="text-[#a1a1aa] max-w-2xl mx-auto text-lg font-light">
+              A systematic approach designed to take your business from where it
+              is now to where you want it to be.
+            </p>
+          </div>
+
+          {/* Timeline Container */}
+          <div className="relative mt-16 lg:mt-24">
+            <div className="absolute top-[3.5rem] left-0 w-full h-[2px] bg-white/10 hidden lg:block rounded-full">
+              <div
+                className="method-line h-full w-full bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600"
+                style={{ transformOrigin: "left" }}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-6 relative z-10">
+              {METHODOLOGY_STEPS.map((step, i) => (
+                <div key={step.id} className="flex flex-col items-center group">
+                  <div className="method-circle relative mb-6">
+                    <div className="w-28 h-28 rounded-full bg-[#0a0a0a] border border-white/10 flex items-center justify-center group-hover:border-pink-500/50 group-hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] transition-all duration-500 z-10 relative">
+                      <step.icon
+                        size={32}
+                        className="text-white group-hover:text-pink-400 transition-colors duration-300"
+                      />
+                    </div>
+                    <div className="absolute inset-0 bg-[#050505] rounded-full -z-10 scale-110" />
+                  </div>
+
+                  <div className="method-content text-center px-2">
+                    <span className="block text-sm font-bold text-pink-500 mb-2">
+                      {i + 1}. {step.title}
+                    </span>
+                    <p className="text-xs text-[#888] leading-relaxed font-light">
+                      {step.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Capabilities Section */}
       <section className="py-20 md:py-32 px-4 md:px-6 relative mx-2 md:mx-6">
         <div className="absolute inset-0 bg-[#080808] rounded-[2rem] md:rounded-[3rem] border border-white/5 shadow-2xl -z-10" />
@@ -365,7 +686,6 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Mapped Capabilities */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {CAPABILITIES.map((service, idx) => (
               <motion.div
@@ -377,7 +697,6 @@ export default function Home() {
               >
                 <TiltCard intensity={10} className="h-full">
                   <div className="group h-full p-8 rounded-2xl bg-[#0F0F0F] hover:bg-[#141414] border border-white/5 hover:border-white/10 transition-all duration-300 flex flex-col justify-between min-h-[300px] relative overflow-hidden">
-                    {/* Hover Glow Gradient */}
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 via-transparent to-pink-500/0 group-hover:from-purple-500/5 group-hover:to-pink-500/5 transition-colors duration-500" />
 
                     <div className="relative z-10">
@@ -398,6 +717,176 @@ export default function Home() {
                   </div>
                 </TiltCard>
               </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* --- SUCCESS STORIES SECTION --- */}
+      <section
+        ref={storiesRef}
+        className="py-24 md:py-32 px-4 md:px-6 bg-[#050505] relative"
+      >
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="mb-16 md:mb-24 flex flex-col md:flex-row justify-between items-end gap-6">
+            <div>
+              <h2 className="text-4xl md:text-7xl font-display font-bold text-white mb-4">
+                Success Stories
+              </h2>
+              <p className="text-[#a1a1aa] text-lg font-light max-w-xl">
+                Real results from businesses that switched to our data-driven
+                growth ecosystem.
+              </p>
+            </div>
+            <Link
+              href="/work"
+              className="text-white border-b border-white pb-1 hover:text-gray-300 transition-colors"
+            >
+              View all case studies
+            </Link>
+          </div>
+
+          {/* Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {SUCCESS_STORIES.map((story) => (
+              <div
+                key={story.id}
+                className="story-card opacity-0 relative group rounded-3xl bg-[#0A0A0A] border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden flex flex-col min-h-[500px]"
+              >
+                {/* 1. IMAGE CONTAINER (Top Half) */}
+                <div className="relative h-[240px] w-full overflow-hidden">
+                  <div
+                    className="absolute inset-0 z-10"
+                    style={{
+                      background:
+                        "linear-gradient(to top, #0A0A0A 5%, transparent 100%)",
+                    }}
+                  />
+                  <img
+                    src={story.image}
+                    alt={story.company}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter grayscale-[0.5] group-hover:grayscale-0"
+                  />
+                </div>
+
+                {/* 2. CONTENT (Bottom Half) */}
+                <div className="relative z-20 p-8 flex flex-col flex-1 justify-between -mt-12">
+                  <div>
+                    {/* Header */}
+                    <div className="flex justify-between items-start mb-6">
+                      <div className="bg-[#0A0A0A]/80 backdrop-blur-md p-3 rounded-xl border border-white/5">
+                        <h3 className="text-xl font-bold text-white mb-1">
+                          {story.company}
+                        </h3>
+                        <p className="text-xs text-[#888] uppercase tracking-wider font-semibold">
+                          {story.category}
+                        </p>
+                      </div>
+                      <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/5">
+                        <Quote size={16} className="text-white" />
+                      </div>
+                    </div>
+
+                    {/* Quote */}
+                    <blockquote className="text-base text-gray-300 font-light leading-relaxed mb-8">
+                      {story.quote}
+                    </blockquote>
+                  </div>
+
+                  {/* Stats Footer */}
+                  <div className="pt-6 border-t border-white/10">
+                    <div className="text-[9px] text-[#555] font-bold uppercase tracking-widest mb-4">
+                      Results from GMBOPTIMIZATION
+                    </div>
+                    <div className="grid grid-cols-3 gap-4">
+                      {story.stats.map((stat, i) => (
+                        <div key={i}>
+                          <div
+                            className={`text-xl font-bold mb-1 ${story.highlight}`}
+                          >
+                            {stat.value}
+                          </div>
+                          <div className="text-[9px] text-gray-500 leading-tight">
+                            {stat.label}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* --- FAQ SECTION --- */}
+      <section
+        ref={faqRef}
+        className="py-24 md:py-32 px-6 bg-[#050505] relative border-t border-white/5"
+      >
+        <div className="max-w-3xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-4">
+              Frequently Asked{" "}
+              <span
+                className="text-transparent bg-clip-text"
+                style={{ backgroundImage: BRAND_GRADIENT }}
+              >
+                Questions
+              </span>
+            </h2>
+            <p className="text-gray-400">
+              Answers to common questions about our services and process.
+            </p>
+          </div>
+
+          {/* Accordion */}
+          <div className="space-y-4">
+            {FAQ_DATA.map((item, i) => (
+              <div
+                key={i}
+                className="faq-item opacity-0 border-b border-white/10 last:border-0"
+              >
+                <button
+                  onClick={() => toggleFaq(i)}
+                  className="w-full py-6 flex items-center justify-between group text-left focus:outline-none"
+                >
+                  <span className="text-lg font-medium text-white group-hover:text-purple-400 transition-colors pr-8">
+                    {item.question}
+                  </span>
+                  <div className="relative">
+                    <motion.div
+                      animate={{ rotate: openFaq === i ? 90 : 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <Plus
+                        size={20}
+                        className={`transition-colors ${
+                          openFaq === i ? "text-purple-400" : "text-gray-500"
+                        }`}
+                      />
+                    </motion.div>
+                  </div>
+                </button>
+                <AnimatePresence>
+                  {openFaq === i && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <p className="pb-6 text-gray-400 leading-relaxed font-light">
+                        {item.answer}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             ))}
           </div>
         </div>
