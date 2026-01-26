@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import {
   MapPin,
@@ -20,6 +21,7 @@ import { TiltCard } from "@/components/TiltCard";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useParams, useSearchParams } from "next/navigation";
 
 // Register GSAP
 gsap.registerPlugin(ScrollTrigger);
@@ -138,6 +140,11 @@ const SERVICES_DATA = [
 export default function Services() {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const searchParams = useSearchParams();
+  const name = searchParams.get("name");
+
+  const isGBP = name === "gbp-optimization";
+
   useGSAP(
     () => {
       ScrollTrigger.refresh();
@@ -216,6 +223,25 @@ export default function Services() {
     { scope: containerRef },
   );
 
+  if (name && !isGBP) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#050505] text-white">
+        <div className="text-center space-y-4">
+          <h1 className="text-4xl font-bold">🚧 Page In Progress</h1>
+          <p className="text-gray-400">
+            This service page is currently being built.
+          </p>
+          <Link
+            href="/services?name=gbp-optimization"
+            className="inline-block mt-6 text-purple-400 underline"
+          >
+            View GBP Optimization
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       ref={containerRef}
@@ -249,8 +275,8 @@ export default function Services() {
           </h1>
 
           <p className="hero-element text-lg md:text-2xl text-[#888] max-w-2xl mx-auto font-light leading-relaxed">
-            We don't offer a menu of services. We offer strategic levers to pull
-            for business dominance.
+            {`We don't offer a menu of services. We offer strategic levers to pull
+            for business dominance.`}
           </p>
         </div>
       </section>
@@ -304,7 +330,7 @@ export default function Services() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <span className="text-purple-400 font-mono text-xs tracking-widest uppercase">
-              // Execution Pipeline
+              {` // Execution Pipeline`}
             </span>
           </div>
 

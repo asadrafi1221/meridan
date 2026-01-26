@@ -551,12 +551,12 @@ export default function Home() {
           {[...Array(2)].map((_, i) => (
             <React.Fragment key={i}>
               {[
-                "ACME Corp",
-                "Technius",
-                "GlobalFlow",
-                "Elevate",
-                "Stratos",
-                "Ventus",
+                "Semrush",
+                "Google Keyword Planner",
+                "Wordpress",
+                "Ahrefs",
+                "Canva",
+                "Google Analytics 4",
               ].map((name) => (
                 <span
                   key={name}
@@ -609,6 +609,63 @@ export default function Home() {
       </section>
 
       {/* --- METHODOLOGY SECTION --- */}
+
+      {/* Capabilities Section */}
+      <section className="py-20 md:py-32 px-4 md:px-6 relative mx-2 md:mx-6">
+        <div className="absolute inset-0 bg-[#080808] rounded-[2rem] md:rounded-[3rem] border border-white/5 shadow-2xl -z-10" />
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 px-4">
+            <h2 className="text-4xl md:text-7xl font-display font-bold text-white">
+              Services
+            </h2>
+            <Link
+              href="/services"
+              className="group flex items-center gap-2 text-[#888] hover:text-white transition-colors mt-8 md:mt-0"
+            >
+              <span className="border-b border-[#333] group-hover:border-white transition-colors pb-1">
+                View all services
+              </span>
+              <ArrowUpRight size={20} />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {CAPABILITIES.map((service, idx) => (
+              <motion.div
+                key={service.id}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.05 }}
+              >
+                <TiltCard intensity={10} className="h-full">
+                  <div className="group h-full p-8 rounded-2xl bg-[#0F0F0F] hover:bg-[#141414] border border-white/5 hover:border-white/10 transition-all duration-300 flex flex-col justify-between min-h-[300px] relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 via-transparent to-pink-500/0 group-hover:from-purple-500/5 group-hover:to-pink-500/5 transition-colors duration-500" />
+
+                    <div className="relative z-10">
+                      <div className="w-12 h-12 rounded-lg bg-[#1a1a1a] flex items-center justify-center mb-8 border border-white/5">
+                        <service.icon size={24} className="text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold mb-4 font-display text-gray-100">
+                        {service.title}
+                      </h3>
+                      <p className="text-[#888] text-sm leading-relaxed">
+                        {service.description}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase text-purple-400 mt-8 relative z-10">
+                      <TrendingUp size={14} />
+                      <span>{service.outcome}</span>
+                    </div>
+                  </div>
+                </TiltCard>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section
         ref={methodologyRef}
         className="py-24 md:py-32 px-4 md:px-6 bg-[#050505] relative border-t border-white/5"
@@ -662,62 +719,6 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Capabilities Section */}
-      <section className="py-20 md:py-32 px-4 md:px-6 relative mx-2 md:mx-6">
-        <div className="absolute inset-0 bg-[#080808] rounded-[2rem] md:rounded-[3rem] border border-white/5 shadow-2xl -z-10" />
-
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 px-4">
-            <h2 className="text-4xl md:text-7xl font-display font-bold text-white">
-              Capabilities.
-            </h2>
-            <Link
-              href="/services"
-              className="group flex items-center gap-2 text-[#888] hover:text-white transition-colors mt-8 md:mt-0"
-            >
-              <span className="border-b border-[#333] group-hover:border-white transition-colors pb-1">
-                View all services
-              </span>
-              <ArrowUpRight size={20} />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {CAPABILITIES.map((service, idx) => (
-              <motion.div
-                key={service.id}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.05 }}
-              >
-                <TiltCard intensity={10} className="h-full">
-                  <div className="group h-full p-8 rounded-2xl bg-[#0F0F0F] hover:bg-[#141414] border border-white/5 hover:border-white/10 transition-all duration-300 flex flex-col justify-between min-h-[300px] relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 via-transparent to-pink-500/0 group-hover:from-purple-500/5 group-hover:to-pink-500/5 transition-colors duration-500" />
-
-                    <div className="relative z-10">
-                      <div className="w-12 h-12 rounded-lg bg-[#1a1a1a] flex items-center justify-center mb-8 border border-white/5">
-                        <service.icon size={24} className="text-white" />
-                      </div>
-                      <h3 className="text-2xl font-bold mb-4 font-display text-gray-100">
-                        {service.title}
-                      </h3>
-                      <p className="text-[#888] text-sm leading-relaxed">
-                        {service.description}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase text-purple-400 mt-8 relative z-10">
-                      <TrendingUp size={14} />
-                      <span>{service.outcome}</span>
-                    </div>
-                  </div>
-                </TiltCard>
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>

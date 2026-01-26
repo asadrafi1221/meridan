@@ -35,56 +35,56 @@ import { BRAND_GRADIENT } from "@/app/page";
 const SERVICE_ITEMS = [
   {
     label: "GBP Optimization",
-    path: "/services/gbp-optimization",
+    query: "gbp-optimization",
     icon: MapPin,
     desc: "Dominate local maps",
     color: "text-blue-400",
   },
   {
     label: "SEO Strategies",
-    path: "/services/seo",
+    query: "seo",
     icon: Search,
     desc: "Organic traffic growth",
     color: "text-purple-400",
   },
   {
     label: "Web Engineering",
-    path: "/services/web-development",
+    query: "web-development",
     icon: Code,
     desc: "High-performance code",
     color: "text-pink-400",
   },
   {
     label: "Conversion Design",
-    path: "/services/landing-page",
+    query: "landing-page",
     icon: Layout,
     desc: "Landing pages that sell",
     color: "text-orange-400",
   },
   {
     label: "Brand Identity",
-    path: "/services/branding",
+    query: "branding",
     icon: Palette,
     desc: "Logo & visual systems",
     color: "text-emerald-400",
   },
   {
     label: "Social Growth",
-    path: "/services/smm",
+    query: "smm",
     icon: Share2,
     desc: "Viral content strategy",
     color: "text-cyan-400",
   },
   {
     label: "PPC & Ads",
-    path: "/services/google-ads",
+    query: "google-ads",
     icon: MousePointerClick,
     desc: "ROI-focused campaigns",
     color: "text-yellow-400",
   },
   {
     label: "AI Solutions",
-    path: "/services/ai-solutions",
+    query: "ai-solutions",
     icon: Bot,
     desc: "Automation & Agents",
     color: "text-indigo-400",
@@ -211,8 +211,8 @@ export const Header = () => {
                             <div className="grid grid-cols-2 gap-2 p-2">
                               {SERVICE_ITEMS.map((service) => (
                                 <Link
-                                  key={service.path}
-                                  href={service.path}
+                                  key={service.query}
+                                  href={`/services?name=${service.query}`}
                                   className="group/item flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-all border border-transparent hover:border-white/5 relative overflow-hidden"
                                 >
                                   {/* Icon Box */}
@@ -376,8 +376,8 @@ export const Header = () => {
                                 <div className="grid grid-cols-1 gap-2 pt-4 pl-2">
                                   {SERVICE_ITEMS.map((service) => (
                                     <Link
-                                      key={service.path}
-                                      href={service.path}
+                                      key={service.query}
+                                      href={`/services?name=${service.query}`}
                                       onClick={toggleMenu}
                                       className="flex items-center gap-4 p-3 rounded-xl hover:bg-white/10 text-[#aaa] hover:text-white transition-all border border-transparent hover:border-white/10"
                                     >
