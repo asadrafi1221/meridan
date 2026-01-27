@@ -21,6 +21,8 @@ import {
   Plus,
   Minus,
   Star,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { Button } from "../components/Button";
 import {
@@ -233,13 +235,15 @@ const snappyStagger: any = {
 
 export default function Home() {
   const { scrollY } = useScroll();
-  const y2 = useTransform(scrollY, [0, 500], [0, -80]);
+  // Unused transform kept for compatibility if you add parallax later
+  // const y2 = useTransform(scrollY, [0, 500], [0, -80]);
 
   const [index, setIndex] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  // Hero Review Index State
+  // Hero Review State
   const [heroReviewIndex, setHeroReviewIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   // Refs for GSAP
   const methodologyRef = useRef<HTMLDivElement>(null);
@@ -254,13 +258,25 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  // Rotate Hero Reviews (5 Seconds)
+  // Rotate Hero Reviews (5 Seconds, Pausable)
   useEffect(() => {
+    if (isPaused) return;
     const interval = setInterval(() => {
       setHeroReviewIndex((prev) => (prev + 1) % HERO_REVIEWS.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isPaused]);
+
+  // Handlers for Review Controls
+  const handleNextReview = () => {
+    setHeroReviewIndex((prev) => (prev + 1) % HERO_REVIEWS.length);
+  };
+
+  const handlePrevReview = () => {
+    setHeroReviewIndex(
+      (prev) => (prev - 1 + HERO_REVIEWS.length) % HERO_REVIEWS.length,
+    );
+  };
 
   // GSAP: Methodology
   useGSAP(
@@ -377,12 +393,12 @@ export default function Home() {
         <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] bg-[#4f46e5] rounded-full blur-[100px] opacity-10 -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[250px] md:w-[500px] h-[250px] bg-[#9333ea] rounded-full blur-[100px] opacity-10 translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full z-10">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center w-full z-10">
           <motion.div
             variants={snappyStagger}
             initial="hidden"
             animate="visible"
-            className="text-left w-full"
+            className="text-left w-full order-1 lg:order-1"
           >
             <motion.div
               variants={fastFadeUp}
@@ -452,94 +468,141 @@ export default function Home() {
             </motion.div>
           </motion.div>
 
-          {/* Interactive Scene */}
-          <div className="relative h-[350px] md:h-[500px] w-full perspective-2000 hidden lg:flex items-center justify-center">
-            <motion.div
-              style={{ y: y2 }}
-              className="relative w-full h-full flex items-center justify-center will-change-transform"
-            >
-              <Cube
-                size={250}
-                z={-200}
-                rotateSpeed={20}
-                color="rgba(255,255,255,0.05)"
-              />
-              <TiltCard className="z-20">
-                <div className="w-[320px] h-[420px] bg-[#0A0A0A]/90 backdrop-blur-xl rounded-3xl shadow-2xl p-6 text-white relative border border-white/10 overflow-hidden group">
-                  <div className="absolute -top-20 -right-20 w-[150px] h-[150px] bg-purple-500/20 blur-[50px] rounded-full pointer-events-none" />
+          {/* Interactive Scene - RESPONSIVE & INTERACTIVE */}
+          <div className="relative w-full min-h-[400px] md:h-[500px] flex items-center justify-center perspective-2000 py-6 md:py-0 order-2 lg:order-2">
+            {/* 3D Context Wrapper */}
+            <motion.div className="relative w-full h-full flex items-center justify-center will-change-transform">
+              {/* Background Cube */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-40 md:opacity-100 pointer-events-none scale-75 md:scale-100">
+                <Cube
+                  size={300}
+                  z={-100}
+                  rotateSpeed={15}
+                  color="rgba(255,255,255,0.05)"
+                />
+              </div>
 
-                  <div className="relative z-10 h-full flex flex-col justify-between">
-                    <div className="flex justify-between items-center mb-6">
-                      <div className="font-display font-bold text-xl tracking-tight text-white">
-                        CLIENT_FEED
+              {/* The Main Card */}
+              <div className="z-20 w-full max-w-[90%] md:max-w-[420px]">
+                <div
+                  className="w-full bg-[#0A0A0A]/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/10 overflow-hidden relative group transition-all duration-300 hover:border-white/20"
+                  onMouseEnter={() => setIsPaused(true)}
+                  onMouseLeave={() => setIsPaused(false)}
+                >
+                  {/* Background Decor */}
+                  <div className="absolute -top-24 -right-24 w-48 h-48 bg-indigo-500/20 blur-[60px] rounded-full pointer-events-none" />
+                  <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-purple-500/10 blur-[60px] rounded-full pointer-events-none" />
+
+                  {/* Giant Quote Icon for texture */}
+                  <Quote className="absolute top-6 right-6 text-white/5 w-24 h-24 rotate-12 pointer-events-none" />
+
+                  <div className="relative z-10 p-6 md:p-8 flex flex-col h-full min-h-[350px]">
+                    {/* Header */}
+                    <div className="flex justify-between items-center mb-8">
+                      <div className="flex items-center gap-3">
+                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
+                        <span className="font-pixel text-xs md:text-sm text-white/70 tracking-widest uppercase">
+                          Client Feed
+                        </span>
                       </div>
-                      <div className="flex gap-2">
-                        <div className="w-2 h-2 bg-green-400 rounded-full shadow-[0_0_8px_rgba(74,222,128,0.8)] animate-pulse" />
+                      {/* Star Rating */}
+                      <div className="flex gap-1 bg-white/5 px-3 py-1 rounded-full border border-white/5">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            size={10}
+                            fill="#EAB308"
+                            className="text-yellow-500"
+                          />
+                        ))}
+                        <span className="text-[10px] text-white/50 ml-1 font-mono pt-[1px]">
+                          5.0
+                        </span>
                       </div>
                     </div>
 
-                    {/* Animated Review Container (1 At a time) */}
-                    <div className="flex-1 flex flex-col justify-center relative min-h-[200px]">
+                    {/* Dynamic Content Area */}
+                    <div className="flex-1 relative">
                       <AnimatePresence mode="wait">
                         <motion.div
                           key={heroReviewIndex}
-                          initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: -30, scale: 0.95 }}
-                          transition={{ duration: 0.5, ease: "easeOut" }}
-                          className="absolute inset-0 flex flex-col justify-center"
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: -20 }}
+                          transition={{ duration: 0.4, ease: "easeOut" }}
+                          className="flex flex-col gap-6"
                         >
-                          <div className="bg-[#111111] transition-colors rounded-xl p-6 border border-white/5 flex flex-col gap-4 shadow-2xl">
-                            <div className="flex justify-between items-start">
-                              <div className="flex items-center gap-3">
-                                <img
-                                  src={HERO_REVIEWS[heroReviewIndex].img}
-                                  alt={HERO_REVIEWS[heroReviewIndex].name}
-                                  className="w-10 h-10 rounded-full border border-white/10 object-cover"
-                                />
-                                <div>
-                                  <div className="text-sm font-bold text-white">
-                                    {HERO_REVIEWS[heroReviewIndex].name}
-                                  </div>
-                                  <div className="text-[10px] text-[#666]">
-                                    {HERO_REVIEWS[heroReviewIndex].role}
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="flex gap-0.5">
-                                {[...Array(5)].map((_, s) => (
-                                  <Star
-                                    key={s}
-                                    size={12}
-                                    fill="currentColor"
-                                    className="text-yellow-500"
-                                  />
-                                ))}
+                          {/* The Quote */}
+                          <p className="text-lg md:text-xl text-white font-light leading-relaxed italic">
+                            {HERO_REVIEWS[heroReviewIndex].text}
+                          </p>
+
+                          {/* The Author */}
+                          <div className="flex items-center gap-4 mt-2">
+                            <div className="relative">
+                              <img
+                                src={HERO_REVIEWS[heroReviewIndex].img}
+                                alt={HERO_REVIEWS[heroReviewIndex].name}
+                                className="w-12 h-12 rounded-full border-2 border-white/10 object-cover"
+                              />
+                              {/* Online Badge */}
+                              <div className="absolute bottom-0 right-0 w-3 h-3 bg-[#111] rounded-full flex items-center justify-center">
+                                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                               </div>
                             </div>
-                            <p className="text-xs text-gray-300 font-light leading-relaxed">
-                              {`"${HERO_REVIEWS[heroReviewIndex].text}"`}
-                            </p>
+
+                            <div>
+                              <div className="text-white font-medium text-base">
+                                {HERO_REVIEWS[heroReviewIndex].name}
+                              </div>
+                              <div className="text-xs text-white/50 font-mono uppercase tracking-wide">
+                                {HERO_REVIEWS[heroReviewIndex].role}
+                              </div>
+                            </div>
                           </div>
                         </motion.div>
                       </AnimatePresence>
                     </div>
 
-                    <div className="pt-4 border-t border-white/10 flex justify-between text-[10px] text-[#555]">
-                      <span>Live Updates</span>
-                      {/* Simple Progress Indicators */}
-                      <div className="flex gap-1">
+                    {/* Footer / Controls */}
+                    <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
+                      {/* Progress Dots */}
+                      <div className="flex gap-1.5">
                         {HERO_REVIEWS.map((_, i) => (
-                          <div
+                          <button
                             key={i}
-                            className={`w-1 h-1 rounded-full transition-colors duration-300 ${i === heroReviewIndex ? "bg-purple-500" : "bg-white/10"}`}
+                            onClick={() => setHeroReviewIndex(i)}
+                            className={`h-1.5 rounded-full transition-all duration-300 ${
+                              i === heroReviewIndex
+                                ? "w-6 bg-white"
+                                : "w-1.5 bg-white/20 hover:bg-white/40"
+                            }`}
+                            aria-label={`Go to slide ${i + 1}`}
                           />
                         ))}
+                      </div>
+
+                      {/* Arrow Controls */}
+                      <div className="flex gap-2">
+                        <button
+                          onClick={handlePrevReview}
+                          className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-white/70 hover:bg-white hover:text-black hover:border-transparent transition-all duration-300"
+                          aria-label="Previous Review"
+                        >
+                          <ChevronLeft size={16} />
+                        </button>
+                        <button
+                          onClick={handleNextReview}
+                          className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-white/70 hover:bg-white hover:text-black hover:border-transparent transition-all duration-300"
+                          aria-label="Next Review"
+                        >
+                          <ChevronRight size={16} />
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
-              </TiltCard>
+              </div>
             </motion.div>
           </div>
         </div>

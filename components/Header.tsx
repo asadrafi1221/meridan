@@ -212,7 +212,7 @@ export const Header = () => {
                               {SERVICE_ITEMS.map((service) => (
                                 <Link
                                   key={service.query}
-                                  href={`/services?name=${service.query}`}
+                                  href={`/services/${service.query}`}
                                   className="group/item flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-all border border-transparent hover:border-white/5 relative overflow-hidden"
                                 >
                                   {/* Icon Box */}
@@ -377,7 +377,7 @@ export const Header = () => {
                                   {SERVICE_ITEMS.map((service) => (
                                     <Link
                                       key={service.query}
-                                      href={`/services?name=${service.query}`}
+                                      href={`/services/${service.query}`}
                                       onClick={toggleMenu}
                                       className="flex items-center gap-4 p-3 rounded-xl hover:bg-white/10 text-[#aaa] hover:text-white transition-all border border-transparent hover:border-white/10"
                                     >
