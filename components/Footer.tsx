@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   ArrowUpRight,
@@ -27,6 +27,7 @@ const SOCIAL_LINKS = [
 ];
 
 export const Footer = () => {
+  const [email, setEmail] = useState("");
   return (
     <footer className="w-full px-4 md:px-6 bg-[#050505] text-white border-t border-white/5">
       <div className="pt-24 pb-12">
@@ -119,10 +120,14 @@ export const Footer = () => {
                   <input
                     type="email"
                     placeholder="Enter your email address"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#555] focus:outline-none focus:border-purple-500/50 focus:bg-white/10 transition-all"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full z-[99999] bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#555] focus:outline-none focus:border-purple-500/50 focus:bg-white/10 transition-all"
                   />
                   <button
-                    className="w-full py-3 rounded-xl font-bold text-xs uppercase tracking-widest text-white shadow-[0_0_20px_rgba(168,85,247,0.2)] hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+                    onClick={() => setEmail("")}
+                    type="submit"
+                    className="w-full py-3 z-[99999] rounded-xl font-bold text-xs uppercase tracking-widest text-white shadow-[0_0_20px_rgba(168,85,247,0.2)] hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
                     style={{ background: BRAND_GRADIENT }}
                   >
                     Join Now <ArrowRight size={14} />
