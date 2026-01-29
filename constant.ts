@@ -13,12 +13,24 @@ import {
   Rocket,
   PenTool,
 } from "lucide-react";
-import { NavItem, Service, CaseStudy, Testimonial } from "./types";
+import { Service, CaseStudy, Testimonial } from "./types";
 
-export const NAV_ITEMS: NavItem[] = [
+export const NAV_ITEMS = [
   { label: "Home", path: "/" },
-
-  { label: "Services", path: "/services" },
+  {
+    label: "Services",
+    path: "/services",
+    children: [
+      { label: "AI Solutions", path: "/services/ai-solutions" },
+      { label: "Branding", path: "/services/branding" },
+      { label: "GBP Optimization", path: "/services/gbp-optimization" },
+      { label: "Google Ads", path: "/services/google-ads" },
+      { label: "SEO", path: "/services/seo" },
+      { label: "Web Development", path: "/services/web-developement" },
+      { label: "Landing Page", path: "/services/landing-page" },
+      { label: "SMM", path: "/services/smm" },
+    ],
+  },
   { label: "How We Work", path: "/process" },
   { label: "Results", path: "/work" },
   { label: "About", path: "/about" },

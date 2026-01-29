@@ -1,422 +1,368 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Menu,
-  X,
-  ArrowRight,
-  Instagram,
-  Twitter,
-  Linkedin,
-  ChevronDown,
-  MapPin,
-  Search,
-  Code,
-  Layout,
-  Palette,
-  Share2,
-  MousePointerClick,
-  Bot,
-  Sparkles,
-  ArrowUpRight,
-} from "lucide-react";
-import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
-import { Button } from "./Button";
 import { NAV_ITEMS } from "@/constant";
+import gsap from "gsap";
+import { ChevronDown } from "lucide-react";
 
-// --- CONFIG ---
-const BRAND_GRADIENT = "linear-gradient(to right, #6366f1, #a855f7, #ec4899)";
-
-const SERVICE_ITEMS = [
-  {
-    label: "GBP Optimization",
-    query: "gbp-optimization",
-    icon: MapPin,
-    desc: "Local Maps Ranking",
-    color: "text-blue-400",
-  },
-  {
-    label: "SEO Strategies",
-    query: "seo",
-    icon: Search,
-    desc: "Organic Growth",
-    color: "text-emerald-400",
-  },
-  {
-    label: "Web Engineering",
-    query: "web-development",
-    icon: Code,
-    desc: "High-Performance Sites",
-    color: "text-purple-400",
-  },
-  {
-    label: "Conversion Design",
-    query: "landing-page",
-    icon: Layout,
-    desc: "Landing Pages",
-    color: "text-orange-400",
-  },
-  {
-    label: "Brand Identity",
-    query: "branding",
-    icon: Palette,
-    desc: "Visual Systems",
-    color: "text-pink-400",
-  },
-  {
-    label: "Social Growth",
-    query: "smm",
-    icon: Share2,
-    desc: "Viral Content",
-    color: "text-cyan-400",
-  },
-  {
-    label: "PPC & Ads",
-    query: "google-ads",
-    icon: MousePointerClick,
-    desc: "Paid Acquisition",
-    color: "text-yellow-400",
-  },
-  {
-    label: "AI Solutions",
-    query: "ai-solutions",
-    icon: Bot,
-    desc: "Automation Agents",
-    color: "text-indigo-400",
-  },
-];
-
-export const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isHoveringServices, setIsHoveringServices] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
-
+const LiquidNavbar = () => {
   const pathname = usePathname();
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
+  const debugRef = useRef<HTMLDivElement>(null);
 
+  const [dimensions, setDimensions] = useState({
+    width: 880,
+    height: 64,
+  });
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+
+  // Configuration
+  const config = {
+    frost: 0.05,
+    saturation: 1.0,
+    radius: 16,
+    border: 0.07,
+    alpha: 0.93,
+    lightness: 50,
+    inputBlur: 11,
+    outputBlur: 0.2,
+    channelX: "R",
+    channelY: "B",
+    blend: "difference",
+    scale: -180,
+    ...dimensions,
+  };
+
+  // Handle Resize
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const handleResize = () => {
+      const width = Math.min(880, window.innerWidth - 32);
+      const height = 64;
+      setDimensions({ width, height });
+      setIsMobile(window.innerWidth < 1024);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Close menus on path change
   useEffect(() => {
-    setIsOpen(false);
-    setMobileServicesOpen(false);
-    document.body.style.overflow = "unset";
+    setMobileMenuOpen(false);
+    setActiveDropdown(null);
   }, [pathname]);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-    document.body.style.overflow = !isOpen ? "hidden" : "unset";
-  };
+  // GSAP Liquid Filter Logic
+  useEffect(() => {
+    const buildDisplacementImage = () => {
+      if (!debugRef.current) return;
+
+      const border =
+        Math.min(config.width, config.height) * (config.border * 0.5);
+
+      const svgContent = `
+        <svg class="displacement-image" viewBox="0 0 ${config.width} ${config.height}" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="red" x1="100%" y1="0%" x2="0%" y2="0%">
+              <stop offset="0%" stop-color="#000"/>
+              <stop offset="100%" stop-color="red"/>
+            </linearGradient>
+            <linearGradient id="blue" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#000"/>
+              <stop offset="100%" stop-color="blue"/>
+            </linearGradient>
+          </defs>
+          <rect x="0" y="0" width="${config.width}" height="${config.height}" fill="black"></rect>
+          <rect x="0" y="0" width="${config.width}" height="${config.height}" rx="${config.radius}" fill="url(#red)" />
+          <rect x="0" y="0" width="${config.width}" height="${config.height}" rx="${config.radius}" fill="url(#blue)" style="mix-blend-mode: ${config.blend}" />
+          <rect x="${border}" y="${
+            Math.min(config.width, config.height) * (config.border * 0.5)
+          }" width="${config.width - border * 2}" height="${
+            config.height - border * 2
+          }" rx="${config.radius}" fill="hsl(0 0% ${config.lightness}% / ${
+            config.alpha
+          })" style="filter:blur(${config.inputBlur}px)" />
+        </svg>
+      `;
+
+      debugRef.current.innerHTML = svgContent;
+      const svgEl = debugRef.current.querySelector(".displacement-image");
+      if (svgEl) {
+        const serialized = new XMLSerializer().serializeToString(svgEl);
+        const encoded = encodeURIComponent(serialized);
+        const dataUri = `data:image/svg+xml,${encoded}`;
+
+        gsap.set(".liquid-nav-root", {
+          "--width": config.width,
+          "--height": config.height,
+          "--radius": config.radius,
+          "--frost": config.frost,
+          "--saturation": config.saturation,
+        });
+
+        const feImage = document.querySelector("#liquid-filter feImage");
+        if (feImage) feImage.setAttribute("href", dataUri);
+
+        const feDisplacementMap = document.querySelector(
+          "#liquid-filter feDisplacementMap",
+        );
+        if (feDisplacementMap) {
+          feDisplacementMap.setAttribute("xChannelSelector", config.channelX);
+          feDisplacementMap.setAttribute("yChannelSelector", config.channelY);
+          feDisplacementMap.setAttribute("scale", String(config.scale));
+        }
+      }
+    };
+    buildDisplacementImage();
+  }, [config.width, config.height]);
+
+  // --- Styles Helper ---
+  const getLinkStyle = (isActive: boolean) =>
+    isActive
+      ? {
+          background:
+            "linear-gradient(135deg, rgb(103, 33, 255) 0%, rgb(234, 14, 150) 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+          textShadow: "none",
+          filter:
+            "brightness(1.2) drop-shadow(0 0 8px rgba(103, 33, 255, 0.6)) drop-shadow(0 0 12px rgba(234, 14, 150, 0.4))",
+          fontWeight: "600",
+        }
+      : {
+          color: "rgba(255, 255, 255, 0.8)",
+          textShadow:
+            "0 0 4px rgba(255, 255, 255, 0.8), 0 0 8px rgba(0, 0, 0, 1), 0 0 12px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 0, 0, 0.6), 0 3px 6px rgba(0, 0, 0, 0.7)",
+          filter: "brightness(1.1)",
+        };
 
   return (
     <>
-      {/* Scroll Progress Indicator */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-[3px] z-[120] origin-left"
-        style={{ scaleX, background: BRAND_GRADIENT }}
-      />
-
-      <header
-        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 border-b ${
-          isScrolled
-            ? "py-3 bg-black/60 backdrop-blur-xl border-white/5 shadow-2xl"
-            : "py-6 bg-transparent border-transparent"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          {/* --- LOGO --- */}
+      <div className="fixed top-8 left-1/2 -translate-x-1/2 z-[100] liquid-nav-root">
+        <div
+          className="relative flex items-center justify-between px-6 backdrop-blur-3xl overflow-visible"
+          style={{
+            width: config.width,
+            height: config.height,
+            borderRadius: config.radius,
+            background: `light-dark(hsl(0 0% 100% / ${config.frost}), hsl(0 0% 0% / ${config.frost}))`,
+            backdropFilter: `url(#liquid-filter) saturate(${config.saturation})`,
+            boxShadow: `0 0 2px 1px rgba(255,255,255,0.1) inset, 0 0 10px 44px rgba(255,255,255,0.05) inset, 0px 4px 16px rgba(0,0,0,0.1)`,
+          }}
+        >
+          {/* LOGO */}
           <Link
             href="/"
-            className="group relative z-[110] flex items-center gap-2.5"
+            className="font-bold text-white text-lg tracking-tight shrink-0 mr-8"
+            style={{
+              textShadow:
+                "0 0 4px rgba(255, 255, 255, 0.8), 0 0 8px rgba(0, 0, 0, 1), 0 0 12px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 0, 0, 0.6), 0 3px 6px rgba(0, 0, 0, 0.7)",
+              color: "#FFFFFF",
+              filter: "brightness(1.1)",
+            }}
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300 shadow-lg">
-              <Sparkles
-                size={18}
-                className="text-white group-hover:text-purple-300 transition-colors"
-              />
-            </div>
+            GMB
+            <span
+              className="text-purple-400"
+              style={{
+                textShadow:
+                  "0 0 4px rgba(255, 255, 255, 0.8), 0 0 8px rgba(0, 0, 0, 1)",
+              }}
+            >
+              .
+            </span>
           </Link>
 
-          {/* --- DESKTOP NAV --- */}
-          <nav className="hidden md:flex items-center gap-1">
-            {NAV_ITEMS.map((item) => {
-              const isServices = item.label === "Services";
-              const isActive = pathname === item.path;
+          {!isMobile ? (
+            <>
+              {/* DESKTOP NAV */}
+              <nav className="flex items-center gap-6 relative z-10 shrink-0 h-full">
+                {NAV_ITEMS.map((item, idx) => {
+                  const isActive = pathname === item.path;
+                  const hasChildren = item.children && item.children.length > 0;
 
-              if (isServices) {
-                return (
-                  <div
-                    key={item.path}
-                    className="relative group px-1"
-                    onMouseEnter={() => setIsHoveringServices(true)}
-                    onMouseLeave={() => setIsHoveringServices(false)}
-                  >
-                    <button
-                      className={`flex items-center gap-1.5 text-sm font-medium px-4 py-2 rounded-full transition-all duration-300 ${
-                        isHoveringServices || pathname.includes("/services")
-                          ? "bg-white/10 text-white"
-                          : "text-gray-400 hover:text-white hover:bg-white/5"
-                      }`}
-                    >
-                      {item.label}
-                      <ChevronDown
-                        size={14}
-                        className={`transition-transform duration-300 ${isHoveringServices ? "rotate-180" : ""}`}
-                      />
-                    </button>
-
-                    {/* MEGA MENU DROPDOWN */}
-                    <AnimatePresence>
-                      {isHoveringServices && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 10, scale: 0.98 }}
-                          transition={{ duration: 0.2 }}
-                          className="absolute top-full left-1/2 -translate-x-1/2 pt-6 w-[600px]"
-                        >
-                          <div className="bg-[#0A0A0A]/95 backdrop-blur-3xl border border-white/10 rounded-2xl shadow-[0_20px_60px_-10px_rgba(0,0,0,0.8)] overflow-hidden">
-                            {/* Gradient Border Top */}
-                            <div
-                              className="h-[2px] w-full"
-                              style={{ background: BRAND_GRADIENT }}
-                            />
-
-                            <div className="p-2 grid grid-cols-2 gap-2">
-                              {SERVICE_ITEMS.map((service) => (
-                                <Link
-                                  key={service.query}
-                                  href={`/services/${service.query}`}
-                                  className="group/item flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/5"
-                                >
-                                  <div
-                                    className={`p-2.5 rounded-lg bg-white/5 border border-white/5 group-hover/item:bg-white/10 transition-colors ${service.color}`}
-                                  >
-                                    <service.icon size={20} />
-                                  </div>
-                                  <div>
-                                    <h4 className="text-sm font-semibold text-white group-hover/item:text-purple-300 transition-colors">
-                                      {service.label}
-                                    </h4>
-                                    <p className="text-[11px] text-gray-500 group-hover/item:text-gray-400">
-                                      {service.desc}
-                                    </p>
-                                  </div>
-                                  <ArrowUpRight
-                                    className="ml-auto opacity-0 group-hover/item:opacity-50 -translate-x-2 group-hover/item:translate-x-0 transition-all text-white"
-                                    size={14}
-                                  />
-                                </Link>
-                              ))}
-                            </div>
-
-                            <div className="p-4 bg-white/5 border-t border-white/5 flex justify-between items-center">
-                              <span className="text-xs text-gray-400">
-                                Ready to scale?
-                              </span>
-                              <Link
-                                href="/services"
-                                className="text-xs font-bold text-white hover:text-purple-400 flex items-center gap-1 transition-colors"
-                              >
-                                View All Services <ArrowRight size={12} />
-                              </Link>
-                            </div>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              }
-
-              return (
-                <div key={item.path} className="px-1">
-                  <Link
-                    href={item.path}
-                    className={`relative text-sm font-medium px-4 py-2 rounded-full transition-all duration-300 ${
-                      isActive
-                        ? "text-white"
-                        : "text-gray-400 hover:text-white hover:bg-white/5"
-                    }`}
-                  >
-                    {item.label}
-                    {isActive && (
-                      <motion.div
-                        layoutId="nav-bg"
-                        className="absolute inset-0 bg-white/10 rounded-full -z-10"
-                        transition={{
-                          type: "spring",
-                          bounce: 0.2,
-                          duration: 0.6,
-                        }}
-                      />
-                    )}
-                  </Link>
-                </div>
-              );
-            })}
-          </nav>
-
-          {/* --- ACTIONS --- */}
-          <div className="flex items-center gap-4">
-            <Link href="/contact" className="hidden md:block">
-              <Button
-                style={{ background: BRAND_GRADIENT }}
-                className="rounded-full px-6 py-2.5 text-xs font-bold text-white shadow-[0_0_25px_rgba(124,58,237,0.4)] hover:shadow-[0_0_35px_rgba(124,58,237,0.6)] hover:scale-105 transition-all duration-300 border-none"
-              >
-                START PROJECT
-              </Button>
-            </Link>
-
-            {/* Mobile Toggle */}
-            <button
-              onClick={toggleMenu}
-              className="md:hidden relative z-[110] p-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-colors"
-            >
-              {isOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* --- MOBILE MENU --- */}
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={toggleMenu}
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[101] md:hidden"
-            />
-
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed inset-y-0 right-0 w-full sm:w-[400px] bg-[#050505] border-l border-white/10 z-[102] md:hidden overflow-y-auto"
-            >
-              <div className="p-8 pt-24 min-h-full flex flex-col">
-                {/* Menu Header */}
-                <div className="mb-10 pb-6 border-b border-white/10">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">
-                    Menu
-                  </span>
-                </div>
-
-                {/* Nav Links */}
-                <nav className="flex flex-col gap-2">
-                  {NAV_ITEMS.map((item, i) => (
-                    <motion.div
-                      key={item.path}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.05 }}
-                    >
-                      {item.label === "Services" ? (
-                        <div className="rounded-2xl overflow-hidden bg-white/5 border border-white/5">
-                          <button
-                            onClick={() =>
-                              setMobileServicesOpen(!mobileServicesOpen)
-                            }
-                            className="w-full flex items-center justify-between p-4"
-                          >
-                            <span className="text-xl font-medium text-white">
-                              Services
-                            </span>
-                            <ChevronDown
-                              className={`transition-transform duration-300 ${mobileServicesOpen ? "rotate-180" : ""}`}
-                              size={20}
-                            />
-                          </button>
-
-                          <AnimatePresence>
-                            {mobileServicesOpen && (
-                              <motion.div
-                                initial={{ height: 0 }}
-                                animate={{ height: "auto" }}
-                                exit={{ height: 0 }}
-                                className="overflow-hidden"
-                              >
-                                <div className="px-2 pb-2 grid gap-1">
-                                  {SERVICE_ITEMS.map((service) => (
-                                    <Link
-                                      key={service.query}
-                                      href={`/services/${service.query}`}
-                                      className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors"
-                                    >
-                                      <service.icon
-                                        size={16}
-                                        className={service.color}
-                                      />
-                                      <span className="text-sm text-gray-300">
-                                        {service.label}
-                                      </span>
-                                    </Link>
-                                  ))}
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </div>
-                      ) : (
+                  if (hasChildren) {
+                    return (
+                      <div
+                        key={idx}
+                        className="relative group h-full flex items-center"
+                      >
                         <Link
-                          href={item.path}
-                          className="block p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/5 transition-all text-xl font-medium text-gray-300 hover:text-white"
+                          href={item.path} // Make the parent clickable too if desired
+                          className="flex items-center gap-1 text-sm font-medium transition-colors whitespace-nowrap hover:text-white py-4"
+                          style={{
+                            color: "rgba(255, 255, 255, 0.8)",
+                            textShadow:
+                              "0 0 4px rgba(255, 255, 255, 0.8), 0 0 8px rgba(0, 0, 0, 1)",
+                            filter: "brightness(1.1)",
+                          }}
                         >
                           {item.label}
+                          <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
                         </Link>
-                      )}
-                    </motion.div>
-                  ))}
-                </nav>
 
-                {/* Footer */}
-                <div className="mt-auto pt-10">
-                  <Link
-                    href="/contact"
-                    onClick={toggleMenu}
-                    className="block mb-8"
-                  >
-                    <Button
-                      style={{ background: BRAND_GRADIENT }}
-                      className="w-full py-4 rounded-xl font-bold text-white shadow-lg"
+                        {/* 
+                            FIXED: Changed mt-4 to pt-4. 
+                            The padding creates an invisible bridge so mouse doesn't fall into the gap.
+                        */}
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 pt-6 w-56 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 ease-out">
+                          <div className="p-2 bg-black/90 backdrop-blur-xl border border-white/10 rounded-xl shadow-[0_20px_40px_rgba(0,0,0,0.5)] flex flex-col gap-1">
+                            {item.children.map((child: any) => (
+                              <Link
+                                key={child.path}
+                                href={child.path}
+                                className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                              >
+                                {child.label}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <Link
+                      key={item.path}
+                      href={item.path}
+                      className={`text-sm font-medium transition-colors whitespace-nowrap py-4 ${
+                        isActive ? "" : "hover:text-white"
+                      }`}
+                      style={getLinkStyle(isActive)}
                     >
-                      Start Project
-                    </Button>
-                  </Link>
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </nav>
 
-                  <div className="flex justify-center gap-6">
-                    {[Instagram, Twitter, Linkedin].map((Icon, i) => (
-                      <a
-                        key={i}
-                        href="#"
-                        className="text-gray-500 hover:text-white transition-colors"
-                      >
-                        <Icon size={20} />
-                      </a>
-                    ))}
-                  </div>
-                </div>
+              <div className="ml-auto shrink-0">
+                <Link
+                  href="/contact"
+                  className="px-5 py-2 bg-white text-black rounded-full text-xs font-bold hover:bg-gray-100 transition-colors whitespace-nowrap shadow-[0_0_15px_rgba(255,255,255,0.3)]"
+                >
+                  Start Project
+                </Link>
               </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+            </>
+          ) : (
+            // Mobile Menu Toggle
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="ml-auto p-2 text-white hover:bg-white/10 rounded-full"
+            >
+              {mobileMenuOpen ? "Close" : "Menu"}
+            </button>
+          )}
+        </div>
+
+        {/* Debug/Filter Setup */}
+        <div ref={debugRef} className="hidden" />
+        <svg
+          className="absolute w-0 h-0 pointer-events-none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <filter
+              id="liquid-filter"
+              colorInterpolationFilters="sRGB"
+              filterUnits="objectBoundingBox"
+              x="0%"
+              y="0%"
+              width="100%"
+              height="100%"
+            >
+              <feImage result="map" preserveAspectRatio="none" />
+              <feDisplacementMap
+                in="SourceGraphic"
+                in2="map"
+                scale={config.scale}
+                xChannelSelector={config.channelX}
+                yChannelSelector={config.channelY}
+                result="displaced"
+              />
+              <feGaussianBlur in="displaced" stdDeviation={config.outputBlur} />
+            </filter>
+          </defs>
+        </svg>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      {isMobile && mobileMenuOpen && (
+        <div className="fixed inset-0 z-[90] bg-black/95 backdrop-blur-xl overflow-y-auto">
+          <div className="flex flex-col items-center justify-center min-h-screen pt-20 pb-10 px-6">
+            <nav className="flex flex-col gap-6 items-center w-full max-w-md">
+              {NAV_ITEMS.map((item, idx) => {
+                const isActive = pathname === item.path;
+                const hasChildren = item.children && item.children.length > 0;
+                const isDropdownOpen = activeDropdown === item.label;
+
+                if (hasChildren) {
+                  return (
+                    <div
+                      key={idx}
+                      className="flex flex-col items-center w-full"
+                    >
+                      <button
+                        onClick={() =>
+                          setActiveDropdown(isDropdownOpen ? null : item.label)
+                        }
+                        className="text-2xl font-bold text-white hover:text-purple-400 flex items-center gap-2"
+                      >
+                        {item.label}
+                        <ChevronDown
+                          className={`w-6 h-6 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
+                        />
+                      </button>
+                      <div
+                        className={`flex flex-col items-center gap-4 mt-4 w-full overflow-hidden transition-all duration-300 ${isDropdownOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
+                      >
+                        {item.children.map((child: any) => (
+                          <Link
+                            key={child.path}
+                            href={child.path}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="text-lg text-gray-400 hover:text-white"
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                }
+                return (
+                  <Link
+                    key={item.path}
+                    href={item.path}
+                    className={`text-2xl font-bold transition-colors ${isActive ? "text-purple-400" : "text-white hover:text-purple-400"}`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+              <Link
+                href="/contact"
+                className="mt-8 px-8 py-4 bg-white text-black rounded-full text-lg font-bold hover:bg-gray-200 transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Start Project
+              </Link>
+            </nav>
+          </div>
+        </div>
+      )}
     </>
   );
 };
+
+export const Header = LiquidNavbar;

@@ -228,7 +228,7 @@ export default function Home() {
               </motion.span>
 
               {/* Rotating Word - Fixed for responsiveness */}
-              <div className="h-[7rem]   sm:h-[14vh] relative mt-2 md:mt-4 overflow-hidden w-full flex justify-center">
+              <div className="h-28 sm:h-[17vh] relative mt-2 md:mt-4 overflow-hidden w-full flex justify-center">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={ROTATING_WORDS[index]}
