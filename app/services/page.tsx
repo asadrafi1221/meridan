@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import {
   motion,
   AnimatePresence,
@@ -16,49 +16,62 @@ import CTA from "@/components/CTA";
 export const BRAND_GRADIENT =
   "linear-gradient(87.22deg, rgb(200, 189, 255) -1.82%, rgb(186, 166, 255) 5.99%, rgb(103, 33, 255) 50.47%, rgb(234, 14, 150) 113.5%)";
 
-// --- DATA ---
-const SERVICES = [
+const SERVICES: any = [
   {
-    id: "01",
-    title: "Web Development",
-    category: "Development",
-    href: "/services/web-development",
-    src: "https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=1000&auto=format&fit=crop",
-  },
-  {
-    id: "02",
-    title: "Strategic SEO",
-    category: "Growth",
-    href: "/services/seo",
-    src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop",
-  },
-  {
-    id: "03",
-    title: "Brand Identity",
-    category: "Design",
-    href: "/services/branding",
-    src: "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1000&auto=format&fit=crop",
-  },
-  {
-    id: "04",
-    title: "Google Ads (PPC)",
-    category: "Marketing",
-    href: "/services/google-ads",
-    src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop",
-  },
-  {
-    id: "05",
-    title: "Social Media",
-    category: "Content",
-    href: "/services/social-media-marketing",
-    src: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1000&auto=format&fit=crop",
-  },
-  {
-    id: "06",
+    id: "gbp-optimization",
     title: "GBP Optimization",
-    category: "Local SEO",
+    category: "marketing",
     href: "/services/gbp-optimization",
-    src: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1000&auto=format&fit=crop",
+    src: "https://source.unsplash.com/600x400/?google,business,marketing",
+  },
+  {
+    id: "seo",
+    title: "SEO",
+    category: "marketing",
+    href: "/services/seo",
+    src: "https://source.unsplash.com/600x400/?seo,analytics,search",
+  },
+  {
+    id: "web-development",
+    title: "Web Development",
+    category: "development",
+    href: "/services/web-developement",
+    src: "https://source.unsplash.com/600x400/?web,code,developer",
+  },
+  {
+    id: "landing-page",
+    title: "Landing Page",
+    category: "development",
+    href: "/services/landing-page",
+    src: "https://source.unsplash.com/600x400/?landing,page,ui",
+  },
+  {
+    id: "google-ads",
+    title: "Google Ads",
+    category: "marketing",
+    href: "/services/google-ads",
+    src: "https://source.unsplash.com/600x400/?advertising,ads,marketing",
+  },
+  {
+    id: "smm",
+    title: "SMM",
+    category: "marketing",
+    href: "/services/smm",
+    src: "https://source.unsplash.com/600x400/?social,media,marketing",
+  },
+  {
+    id: "branding",
+    title: "Branding",
+    category: "design",
+    href: "/services/branding",
+    src: "https://source.unsplash.com/600x400/?branding,design,logo",
+  },
+  {
+    id: "ai-solutions",
+    title: "AI Solutions",
+    category: "ai",
+    href: "/services/ai-solutions",
+    src: "https://source.unsplash.com/600x400/?artificial,intelligence,technology",
   },
 ];
 
@@ -174,7 +187,7 @@ export default function ServicesPage() {
       <section className="px-6 md:px-12 pb-32 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col">
-            {SERVICES.map((service) => (
+            {SERVICES.map((service: any) => (
               <Link
                 href={service.href}
                 key={service.id}

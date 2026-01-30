@@ -15,6 +15,7 @@ import { Cube } from "@/components/Shapes3D";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import CTA from "@/components/CTA";
 
 // Register GSAP
 gsap.registerPlugin(ScrollTrigger);
@@ -195,7 +196,7 @@ const Process: React.FC = () => {
             </span>
           </div>
 
-          <h1 className="hero-content text-5xl sm:text-7xl md:text-9xl font-display font-extrabold mb-8 text-white tracking-tighter leading-[0.9]">
+          <h1 className="hero-content text-5xl sm:text-7xl md:text-9xl font-display font-thin mb-8 text-white tracking-tighter leading-[0.9]">
             The{" "}
             <span
               className="text-transparent bg-clip-text"
@@ -205,8 +206,9 @@ const Process: React.FC = () => {
             </span>
           </h1>
 
-          <p className="hero-content text-lg md:text-2xl text-[#a1a1aa] font-light max-w-3xl mx-auto leading-relaxed">
-            Communication is chaotic. Collaboration shouldn’t be. <br className="hidden md:block" />
+          <p className="hero-content text-lg  text-[#a1a1aa] font-light max-w-3xl mx-auto leading-relaxed">
+            Communication is chaotic. Collaboration shouldn’t be.{" "}
+            <br className="hidden md:block" />
             We use a real-tested framework to ensure your business is{" "}
             <span className="font-semibold text-white">
               never left in the dark
@@ -228,8 +230,9 @@ const Process: React.FC = () => {
           {PHASES.map((phase, index) => (
             <div
               key={phase.id}
-              className={`process-phase relative flex flex-col md:flex-row gap-12 md:gap-24 items-center ${index % 2 !== 0 ? "md:flex-row-reverse" : ""
-                }`}
+              className={`process-phase relative flex flex-col md:flex-row gap-12 md:gap-24 items-center ${
+                index % 2 !== 0 ? "md:flex-row-reverse" : ""
+              }`}
             >
               {/* Center Node Marker */}
               <div className="center-node absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-[#050505] border border-white/10 rounded-full z-20 hidden md:flex items-center justify-center shadow-[0_0_30px_rgba(0,0,0,1)]">
@@ -282,10 +285,11 @@ const Process: React.FC = () => {
               {/* Content Side */}
               <div className="phase-content w-full md:w-1/2">
                 <div
-                  className={`flex flex-col ${index % 2 === 0
-                    ? "md:items-start md:text-left"
-                    : "md:items-end md:text-right"
-                    }`}
+                  className={`flex flex-col ${
+                    index % 2 === 0
+                      ? "md:items-start md:text-left"
+                      : "md:items-end md:text-right"
+                  }`}
                 >
                   <span className="text-8xl font-display font-bold text-white/5 mb-4 select-none absolute -top-10 opacity-50 pointer-events-none">
                     {phase.id}
@@ -319,8 +323,9 @@ const Process: React.FC = () => {
                       {phase.deliverables.map((item, i) => (
                         <li
                           key={i}
-                          className={`text-sm font-medium text-gray-300 flex items-center gap-3 ${index % 2 !== 0 ? "md:flex-row-reverse" : ""
-                            }`}
+                          className={`text-sm font-medium text-gray-300 flex items-center gap-3 ${
+                            index % 2 !== 0 ? "md:flex-row-reverse" : ""
+                          }`}
                         >
                           <div
                             className={`w-1.5 h-1.5 rounded-full ${phase.color.replace("text-", "bg-")}`}
@@ -338,6 +343,7 @@ const Process: React.FC = () => {
       </div>
 
       {/* Bottom CTA */}
+      <CTA />
     </div>
   );
 };

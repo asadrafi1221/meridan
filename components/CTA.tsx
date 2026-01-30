@@ -1,5 +1,6 @@
 import { BRAND_GRADIENT } from "@/constant";
 import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 function CTA() {
@@ -20,16 +21,19 @@ function CTA() {
             href="mailto:hello@gmboptimization.com"
             className="text-xl md:text-2xl border-b border-white/30 pb-2 hover:border-white hover:text-purple-300 transition-all"
           >
-            hello@gmboptimization.com
+            mike.gmbrankup@gmail.com
           </a>
         </div>
         <div className="mt-12 md:mt-0">
-          <div className="group w-32 h-32 rounded-full border border-white/20 flex items-center justify-center hover:scale-110 transition-transform duration-300 cursor-pointer bg-white/5">
+          <Link
+            href={"/contact"}
+            className="group w-32 h-32 rounded-full border border-white/20 flex items-center justify-center hover:scale-110 transition-transform duration-300 cursor-pointer bg-white/5"
+          >
             <ArrowUpRight
               size={40}
               className="group-hover:rotate-45 transition-transform duration-300 text-white"
             />
-          </div>
+          </Link>
         </div>
       </div>
     </section>

@@ -28,7 +28,7 @@ const SOCIAL_LINKS = [
 export const Footer = () => {
   const [email, setEmail] = useState("");
   return (
-    <footer className="w-full px-4 md:px-6 bg-[#050505] text-white border-t border-white/5">
+    <footer className="w-full px-4 z-[9999999] relative md:px-6 bg-[#050505] text-white border-t border-white/5">
       <div className="pt-24 pb-12">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
@@ -71,18 +71,37 @@ export const Footer = () => {
                 Navigation
               </h4>
               <ul className="flex flex-col gap-4 text-[#a1a1aa] text-sm font-medium">
-                {["Services", "Case Studies", "Our Process", "Waitlist"].map(
-                  (item) => (
-                    <li key={item}>
-                      <Link
-                        href="#"
-                        className="hover:text-white transition-colors hover:translate-x-1 inline-block duration-200"
-                      >
-                        {item}
-                      </Link>
-                    </li>
-                  ),
-                )}
+                {[
+                  {
+                    item: "Home",
+                    path: "/",
+                  },
+                  {
+                    item: "Services",
+                    path: "/services",
+                  },
+                  {
+                    item: "How We Work",
+                    path: "/process",
+                  },
+                  {
+                    item: "Results",
+                    path: "/work",
+                  },
+                  {
+                    item: "About",
+                    path: "/about",
+                  },
+                ].map((item) => (
+                  <li key={item?.path}>
+                    <Link
+                      href={item?.path}
+                      className="hover:text-white transition-colors hover:translate-x-1 inline-block duration-200"
+                    >
+                      {item?.item}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -100,7 +119,7 @@ export const Footer = () => {
                     size={16}
                     className="group-hover:-translate-y-1 transition-transform duration-300"
                   />
-                  hello@meridian.agency
+                  mike.gmbrankup@gmail.com
                 </a>
                 <p className="text-[#555] text-xs leading-relaxed">
                   Lahore, Pakistan <br /> Global Operations

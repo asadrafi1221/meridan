@@ -254,11 +254,11 @@ export default function Home() {
               variants={fastFadeUp}
               className="text-base sm:text-lg text-[#888] max-w-[90%] md:max-w-xl mx-auto mb-10 font-light leading-relaxed px-2"
             >
-              We don&apos;t just run ads. We build{" "}
-              <span className="text-white font-medium">
-                dominant digital ecosystems
-              </span>{" "}
-              that scale revenue and automate growth for serious brands.
+              We {`don't`} just run ads. We build Complete{" "}
+              <span className="text-white font-semibold">
+                Digital Dominance{" "}
+              </span>
+              scale Businesses and automate growth for serious brands.{" "}
             </motion.p>
 
             {/* CTA Buttons */}
@@ -266,22 +266,22 @@ export default function Home() {
               variants={fastFadeUp}
               className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto px-6 sm:px-0"
             >
-              <Link href="/contact" className="w-full sm:w-auto">
+              <a href="tel:+923151885725" className="w-full sm:w-auto">
                 <Button
                   size="lg"
                   style={{ background: BRAND_GRADIENT }}
                   className="w-full sm:w-auto min-w-[160px] shadow-[0_0_30px_rgba(120,50,255,0.25)] text-white border-0 font-semibold h-12 rounded-xl text-sm transition-transform hover:scale-105"
                 >
-                  Get Proposal
+                  Chat now
                 </Button>
-              </Link>
+              </a>
 
               <Link href="/work" className="w-full sm:w-auto">
-                <button className="w-full sm:w-auto min-w-[160px] h-12 flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white text-sm font-medium transition-all group backdrop-blur-sm">
-                  <Play
+                <button className="w-full  sm:w-auto min-w-[160px] h-12 flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white text-sm font-medium transition-all group backdrop-blur-sm">
+                  {/* <Play
                     size={14}
                     className="fill-white text-white group-hover:scale-110 transition-transform"
-                  />
+                  /> */}
                   <span>View Our Work</span>
                 </button>
               </Link>
@@ -299,7 +299,7 @@ export default function Home() {
 
               <div className="flex flex-col items-center gap-6">
                 <p className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-semibold">
-                  Trusted By Market Leaders
+                  Our Partners
                 </p>
 
                 {/* INFINITE MARQUEE */}
@@ -321,7 +321,7 @@ export default function Home() {
                     ].map((brand, i) => (
                       <span
                         key={`${brand}-${i}`}
-                        className="text-2xl md:text-3xl font-display font-bold text-white/30 whitespace-nowrap"
+                        className="text-2xl md:text-3xl font-display font-bold text-white/80 whitespace-nowrap"
                       >
                         {brand}
                       </span>
@@ -350,11 +350,11 @@ export default function Home() {
                 className="text-transparent text-xl  lg:text-2xl 2xl:text-3xl 2xl:pl-3 relative bg-clip-text"
                 style={{ backgroundImage: BRAND_GRADIENT }}
               >
-                GBP OPTIMIZATION?
+                GMB OPTIMIZATION?
               </span>
             </motion.h2>
             <p className="text-lg md:text-xl text-[#a1a1aa] font-light">
-              Everything starts with a search. GBP OPTIMIZATION ensures you are
+              Everything starts with a search. GMB OPTIMIZATION ensures you are
               always visible at the top to drive traffic directly to your
               business.
             </p>

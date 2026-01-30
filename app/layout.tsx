@@ -24,7 +24,7 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: "Meridian | Global Growth Partners",
+  title: "GMB Optimization",
   description: "Strategic digital growth partner for scaling businesses.",
 };
 

@@ -6,7 +6,6 @@ import {
   Zap,
   Globe,
   Code2,
-  ArrowUpRight,
   Lock,
   MessageSquare,
   Terminal,
@@ -136,7 +135,6 @@ export const BentoGrid = () => {
       ref={containerRef}
       className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
     >
-      {/* 1. Global Standard */}
       <BentoItem
         ref={(el) => addToRefs(el, 0)}
         className="md:col-span-2 min-h-[300px]"
@@ -149,23 +147,20 @@ export const BentoGrid = () => {
               <span>Global Standard</span>
             </div>
             <h3 className="text-3xl md:text-5xl font-display font-bold mb-4 tracking-tighter text-white">
-              Silicon Valley Quality.
+              Result is our
               <br />
               <span
                 className="text-transparent bg-clip-text"
                 style={{ backgroundImage: BRAND_GRADIENT }}
               >
-                Lahore Costs.
+                Proof of work
               </span>
             </h3>
           </div>
           <div className="flex items-end justify-between">
             <p className="text-[#888] text-sm max-w-xs font-light leading-relaxed">
-              Top 1% engineering talent without the inflated US salary bands.
+              Want better result lets work
             </p>
-            <div className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(255,255,255,0.2)]">
-              <ArrowUpRight size={18} />
-            </div>
           </div>
         </div>
       </BentoItem>
@@ -176,15 +171,15 @@ export const BentoGrid = () => {
           <div className="flex items-center gap-3 mb-6 text-purple-400">
             <Terminal size={18} />
             <span className="text-[10px] font-bold uppercase tracking-widest">
-              Engineering Playbook
+              With Every Plain You Get
             </span>
           </div>
 
           <div className="space-y-3">
             {[
-              "Automated CI/CD Pipelines",
-              "Type-Safe Architecture",
-              "Weekly Sprint Cycles",
+              "A Dadicated Account Manager",
+              "Customer Support Representative",
+              "IT & Technical Team",
             ].map((item, i) => (
               <div
                 key={i}
@@ -209,7 +204,7 @@ export const BentoGrid = () => {
           </div>
 
           <div className="py-8 flex flex-wrap justify-center gap-2">
-            {["React", "Next.js", "TS", "Go"].map((t) => (
+            {["React", "Next.js", "TS", "Node.js", "Mongo-DB"].map((t) => (
               <span
                 key={t}
                 className="px-2.5 py-1 bg-[#1a1a1a] border border-white/5 rounded-md text-[10px] font-bold uppercase text-gray-400 hover:text-white hover:border-purple-500/30 transition-all"
@@ -220,9 +215,9 @@ export const BentoGrid = () => {
           </div>
 
           <div>
-            <h4 className="font-bold text-white text-sm">Modern Stack</h4>
+            <h4 className="font-bold text-white text-sm">Webite dev</h4>
             <p className="text-[11px] text-gray-500 mt-1 uppercase tracking-wide">
-              Vercel • AWS • Docker
+              Wordpress • Custom code
             </p>
           </div>
         </div>
@@ -235,25 +230,26 @@ export const BentoGrid = () => {
           <div className="flex justify-between items-start mb-6">
             <MessageSquare size={20} className="text-indigo-500" />
             <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">
-              Live Sync
+              Live Support Available
             </span>
           </div>
 
           <div className="space-y-3 flex-1">
             <div className="bg-[#1A1A1A] p-3 rounded-2xl rounded-tl-sm border border-white/5 text-[11px] text-gray-400 w-[90%]">
-              Deployment #420 complete.
+              Can we do a meeting right now?
             </div>
             <div
               style={{ background: BRAND_GRADIENT }}
               className="p-3 rounded-2xl rounded-tr-sm shadow-lg shadow-purple-900/20 text-[11px] text-white ml-auto w-[80%] font-medium"
             >
-              Metrics look solid! 🚀
+              {" "}
+              {`Sure Let's do it!`} 😊
             </div>
           </div>
 
           <div className="mt-6 pt-6 border-t border-white/5">
             <p className="text-[10px] text-gray-500 font-mono text-center">
-              SLACK • LINEAR • GITHUB
+              ZOOM • Google Meet • Whatsapp
             </p>
           </div>
         </div>
@@ -271,10 +267,10 @@ export const BentoGrid = () => {
             </div>
             <div>
               <h3 className="text-2xl font-bold mb-2 text-white">
-                Built to Scale.
+                Organic takes time but it always pay off.
               </h3>
               <p className="text-[#888] text-xs font-light leading-relaxed max-w-[200px]">
-                Architectures built for 10x traffic growth without the downtime.
+                Within 6 months we can get 10x traffic growth.
               </p>
             </div>
           </div>
@@ -319,7 +315,7 @@ export const BentoGrid = () => {
           2.5x
         </div>
         <p className="text-xs text-[#888] font-medium leading-relaxed">
-          Faster delivery than US agencies via parallel workstreams.
+          Faster delivery of results than market standards.
         </p>
       </BentoItem>
 
@@ -329,10 +325,10 @@ export const BentoGrid = () => {
           size={20}
           className="text-pink-400 mb-6 drop-shadow-[0_0_8px_rgba(236,72,153,0.5)]"
         />
-        <h4 className="font-bold text-white mb-1">IP Ownership</h4>
+        <h4 className="font-bold text-white mb-1">Product Ownership</h4>
         <p className="text-xs text-[#888] font-light leading-relaxed">
-          100% legal transfer. <br />
-          NDA signed before kickoff.
+          100% Truted. <br />
+          Agreements will be signed from both parties.
         </p>
       </BentoItem>
     </div>

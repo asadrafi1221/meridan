@@ -34,6 +34,7 @@ export const NAV_ITEMS = [
   { label: "How We Work", path: "/process" },
   { label: "Results", path: "/work" },
   { label: "About", path: "/about" },
+  { label: "Contact", path: "/contact" },
 ];
 
 export const SERVICES: Service[] = [
@@ -73,46 +74,51 @@ export const SERVICES: Service[] = [
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
-    id: "fintech-scale",
-    client: "NovaPay",
-    industry: "FinTech / SaaS",
-    title: "Scaling a Dubai Fintech to 50k Users",
+    id: "1",
+    client: "Fine Paint Works",
+    industry: "House Painter • Wantirna South",
+    title: "Domatating Local Search Results",
     metrics: [
-      { label: "User Growth", value: "+340%" },
-      { label: "CPA Reduction", value: "-45%" },
+      { label: "Local Ranking", value: "#1 Spot" },
+      { label: "Monthly Calls", value: "300+" },
+      { label: "Avg Review", value: "4.9/5" },
     ],
-    image: "https://picsum.photos/800/600?grayscale&random=1",
+    image:
+      "https://res.cloudinary.com/dznywn6ek/image/upload/v1769597882/House_Interior_Painters_in_Scoresby_and_Knoxfield_arqe10.jpg",
     description:
-      "We re-architected their entire acquisition funnel and implemented a headless CMS architecture.",
+      "We were invisible on Maps before. Now we're the #1 result for 'House Painter near me'. Our phone hasn't stopped ringing.",
   },
   {
-    id: "ecom-brand",
-    client: "Lumina Home",
-    industry: "E-Commerce",
-    title: "From Local Shopify Store to Global Brand",
+    id: "2",
+    client: "Metro HVAC Services",
+    industry: "Home Services • Sydney",
+    title: "Scaling Lead Generation with PPC",
     metrics: [
-      { label: "Revenue", value: "$2.4M" },
-      { label: "ROAS", value: "6.2x" },
+      { label: "Lead Increase", value: "240%" },
+      { label: "Lower CPC", value: "35%" },
+      { label: "Map Ranking", value: "Top 3" },
     ],
-    image: "https://picsum.photos/800/600?grayscale&random=2",
+    image:
+      "https://res.cloudinary.com/dznywn6ek/image/upload/v1769598140/HVAC_1_rtgvii.jpg",
     description:
-      "A comprehensive rebrand combined with aggressive meta-ads strategy managed by our Lahore dedicated team.",
+      "We were struggling to get calls in the off-season. GMBOPTIMIZATION completely revamped our Google Ads and now we're booked out 3 weeks in advance.",
   },
   {
-    id: "health-tech",
-    client: "VitalCheck",
-    industry: "HealthTech",
-    title: "Automating Patient Intake for a UK Clinic Network",
+    id: "3",
+    client: "Elite Law Firm",
+    industry: "Legal • Brisbane",
+    title: "High-Conversion Website Redesign",
     metrics: [
-      { label: "Admin Hours Saved", value: "1,200+" },
-      { label: "Booking Efficiency", value: "+85%" },
+      { label: "Load Speed", value: "< 1.5s" },
+      { label: "Organic Growth", value: "150%" },
+      { label: "New Inquiries", value: "50+" },
     ],
-    image: "https://picsum.photos/800/600?grayscale&random=3",
+    image:
+      "https://res.cloudinary.com/dznywn6ek/image/upload/v1769598543/office_law_xu7gfo.jpg",
     description:
-      "Custom software development connecting legacy EMR systems with a modern React frontend.",
+      "Our previous website was slow and outdated. The new site isn't just beautiful it actually converts visitors into clients. Best investment we've made.",
   },
 ];
-
 export const TESTIMONIALS: Testimonial[] = [
   {
     id: "t1",

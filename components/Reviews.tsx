@@ -3,23 +3,28 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Quote, Star } from "lucide-react";
-import { HERO_REVIEWS } from "@/constant"; // Ensure this imports your data correctly
+import {
+  ArrowLeft,
+  ArrowRight,
+  Quote,
+  Star,
+  Sparkles,
+  GripHorizontal,
+} from "lucide-react";
+import { HERO_REVIEWS } from "@/constant"; // Ensure this imports your data
 
-// --- EXTEND DATA FOR DEMO VOLUME ---
+// --- DEMO DATA ---
 const REVIEWS = [
   ...HERO_REVIEWS,
   {
     text: "We've worked with five different agencies over the last decade. GMBOPTIMIZATION is the only one that actually moved the needle on revenue.",
     name: "David K.",
     role: "Founder, Apex Logistics",
-    img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=100&h=100",
   },
   {
     text: "The ROI was clear within the first 30 days. Their dashboard is transparent, and the team is always one step ahead of the algorithm.",
     name: "Elena R.",
     role: "CMO, BrightWave",
-    img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?fit=crop&w=100&h=100",
   },
 ];
 
@@ -27,24 +32,22 @@ export const Reviews = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
-  // Logic to handle looping
-  const handleNext = () => {
-    setDirection(1);
-    setCurrentIndex((prev) => (prev + 1 === REVIEWS.length ? 0 : prev + 1));
+  const paginate = (newDirection: number) => {
+    setDirection(newDirection);
+    if (newDirection === 1) {
+      setCurrentIndex((prev) => (prev + 1 === REVIEWS.length ? 0 : prev + 1));
+    } else {
+      setCurrentIndex((prev) => (prev - 1 < 0 ? REVIEWS.length - 1 : prev - 1));
+    }
   };
 
-  const handlePrev = () => {
-    setDirection(-1);
-    setCurrentIndex((prev) => (prev - 1 < 0 ? REVIEWS.length - 1 : prev - 1));
-  };
-
-  // Variants for the springy card animation
-  const cardVariants: any = {
+  // --- ANIMATION VARIANTS ---
+  const variants: any = {
     enter: (direction: number) => ({
-      x: direction > 0 ? 100 : -100,
+      x: direction > 0 ? 300 : -300,
       opacity: 0,
-      scale: 0.8,
-      rotateY: direction > 0 ? 15 : -15,
+      scale: 0.9,
+      rotateY: direction > 0 ? 10 : -10,
     }),
     center: {
       zIndex: 1,
@@ -53,167 +56,185 @@ export const Reviews = () => {
       scale: 1,
       rotateY: 0,
       transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 25, // The "Springy" bounce factor
-        mass: 1,
+        x: { type: "spring", stiffness: 300, damping: 30 },
         opacity: { duration: 0.2 },
       },
     },
     exit: (direction: number) => ({
       zIndex: 0,
-      x: direction < 0 ? 100 : -100,
+      x: direction < 0 ? 300 : -300,
       opacity: 0,
-      scale: 0.8,
-      rotateY: direction < 0 ? 15 : -15,
+      scale: 0.9,
+      rotateY: direction < 0 ? 10 : -10,
       transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 25,
+        x: { type: "spring", stiffness: 300, damping: 30 },
         opacity: { duration: 0.2 },
       },
     }),
   };
 
+  // --- DRAG LOGIC ---
+  const swipeConfidenceThreshold = 10000;
+  const swipePower = (offset: number, velocity: number) => {
+    return Math.abs(offset) * velocity;
+  };
+
   return (
-    <section className="py-24 md:py-32 bg-[#050505] relative overflow-hidden border-t border-white/5">
-      {/* Background Ambience */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,50,255,0.05),transparent_70%)] pointer-events-none" />
+    <section className="py-24 md:py-32 bg-[#050505] relative overflow-hidden border-t border-white/5 select-none">
+      {/* --- BACKGROUND AMBIENCE --- */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
+      {/* Moving Orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          animate={{ x: [0, 50, 0], y: [0, -30, 0], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/4 left-1/3 w-[600px] h-[600px] bg-purple-900/20 rounded-full blur-[120px]"
+        />
+        <motion.div
+          animate={{ x: [0, -50, 0], y: [0, 50, 0], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-1/4 right-1/3 w-[500px] h-[500px] bg-indigo-900/20 rounded-full blur-[120px]"
+        />
+      </div>
+
+      <div className="max-w-5xl mx-auto px-6 relative z-10">
         {/* HEADER */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 md:mb-24 gap-6">
-          <div className="max-w-2xl">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="text-4xl md:text-6xl font-display font-bold text-white mb-6"
-            >
-              Client{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-                Feedback
-              </span>
-            </motion.h2>
-            <p className="text-[#a1a1aa] text-lg font-light">
-              We build partnerships, not just campaigns. See what happens when
-              ambition meets execution.
-            </p>
-          </div>
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-purple-300 mb-6 backdrop-blur-sm"
+          >
+            <Sparkles size={12} />
+            <span>Success Stories</span>
+          </motion.div>
 
-          {/* CONTROLS (Desktop) */}
-          <div className="hidden md:flex gap-4">
-            <button
-              onClick={handlePrev}
-              className="w-14 h-14 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white hover:bg-white hover:text-black hover:scale-110 active:scale-95 transition-all duration-300"
-            >
-              <ArrowLeft size={24} />
-            </button>
-            <button
-              onClick={handleNext}
-              className="w-14 h-14 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white hover:bg-white hover:text-black hover:scale-110 active:scale-95 transition-all duration-300"
-            >
-              <ArrowRight size={24} />
-            </button>
-          </div>
+          <h2 className="text-4xl md:text-6xl font-display font-bold text-white tracking-tight">
+            What Our{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400">
+              Customers Say
+            </span>
+          </h2>
         </div>
 
-        {/* CAROUSEL AREA */}
-        <div className="relative h-[450px] md:h-[400px] flex items-center justify-center perspective-1000">
+        {/* --- CAROUSEL CONTAINER (Fixed Height) --- */}
+        <div className="relative h-[500px] md:h-[450px] w-full max-w-4xl mx-auto flex items-center justify-center perspective-1000">
           <AnimatePresence initial={false} custom={direction} mode="popLayout">
             <motion.div
               key={currentIndex}
               custom={direction}
-              variants={cardVariants}
+              variants={variants}
               initial="enter"
               animate="center"
               exit="exit"
-              className="absolute w-full max-w-[800px] bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 md:p-12 shadow-[0_0_50px_rgba(0,0,0,0.5)] backdrop-blur-xl overflow-hidden"
+              // DRAG PROPERTIES
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }} // Snap back logic
+              dragElastic={1} // Feeling of resistance
+              onDragEnd={(e, { offset, velocity }) => {
+                const swipe = swipePower(offset.x, velocity.x);
+                if (swipe < -swipeConfidenceThreshold) {
+                  paginate(1);
+                } else if (swipe > swipeConfidenceThreshold) {
+                  paginate(-1);
+                }
+              }}
+              className="absolute w-full h-full cursor-grab active:cursor-grabbing"
             >
-              {/* Card Glow Background */}
-              <div className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.03),transparent_50%)] pointer-events-none" />
+              {/* GLASS CARD */}
+              <div className="w-full h-full relative rounded-[2.5rem] border border-white/10 bg-white/[0.02] backdrop-blur-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] overflow-hidden flex flex-col items-center justify-center p-8 md:p-16">
+                {/* Decorative Noise/Texture */}
+                <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
 
-              <div className="relative z-10 flex flex-col md:flex-row gap-8 md:gap-12 items-start md:items-center h-full">
-                {/* Left: Author Info */}
-                <div className="flex flex-row md:flex-col items-center md:items-start gap-4 md:min-w-[180px] md:border-r border-white/10 md:pr-8 md:h-full md:justify-center">
-                  <div className="relative group">
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full blur opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full p-[2px] bg-gradient-to-r from-purple-500 to-pink-500">
-                      <img
-                        src={REVIEWS[currentIndex].img}
-                        alt={REVIEWS[currentIndex].name}
-                        className="w-full h-full rounded-full object-cover border-2 border-black"
-                      />
-                    </div>
+                {/* Top Reflection */}
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-70" />
+
+                {/* --- CONTENT --- */}
+                <div className="relative z-10 flex flex-col items-center text-center max-w-2xl mx-auto">
+                  {/* Glowing Icon */}
+                  <div className="mb-8 relative group">
+                    <div className="absolute inset-0 bg-purple-500 rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
+                    <Quote
+                      size={48}
+                      className="text-white/80 relative z-10 fill-white/5"
+                    />
                   </div>
 
-                  <div className="text-left md:text-left">
-                    <h4 className="text-white font-bold text-lg md:text-xl leading-tight mb-1">
+                  {/* Review Text */}
+                  <p className="text-2xl md:text-3xl font-light text-gray-100 leading-snug mb-10 tracking-wide">
+                    &quot;{REVIEWS[currentIndex].text}&quot;
+                  </p>
+
+                  <div className="w-24 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-8" />
+
+                  {/* Author Details */}
+                  <div className="flex flex-col items-center gap-2">
+                    {/* Stars */}
+                    <div className="flex gap-1 mb-2">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          size={18}
+                          fill="#EAB308"
+                          className="text-yellow-500 drop-shadow-[0_0_8px_rgba(234,179,8,0.3)]"
+                        />
+                      ))}
+                    </div>
+
+                    <h4 className="text-white font-bold text-lg tracking-wide">
                       {REVIEWS[currentIndex].name}
                     </h4>
-                    <p className="text-xs md:text-sm text-gray-500 uppercase tracking-widest font-medium">
+                    <p className="text-sm text-purple-300/80 font-medium uppercase tracking-widest">
                       {REVIEWS[currentIndex].role}
                     </p>
                   </div>
                 </div>
 
-                {/* Right: Content */}
-                <div className="flex-1 flex flex-col justify-center">
-                  <div className="mb-6 flex gap-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        size={18}
-                        fill="#EAB308"
-                        className="text-yellow-500"
-                      />
-                    ))}
-                  </div>
-
-                  <Quote
-                    size={40}
-                    className="text-white/10 mb-4 absolute top-8 right-8"
-                  />
-
-                  <p className="text-xl md:text-2xl text-gray-200 font-light leading-relaxed">
-                    &quot;{REVIEWS[currentIndex].text}&quot;
-                  </p>
+                {/* Drag Hint (Mobile/Desktop Visual Cue) */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 text-white/20 text-xs font-medium uppercase tracking-widest pointer-events-none">
+                  <GripHorizontal size={16} />
+                  <span>Drag to Navigate</span>
                 </div>
               </div>
             </motion.div>
           </AnimatePresence>
-        </div>
 
-        {/* CONTROLS (Mobile Only) */}
-        <div className="flex md:hidden justify-center gap-6 mt-8">
+          {/* SIDE BUTTONS (Desktop - Outside the card area) */}
           <button
-            onClick={handlePrev}
-            className="w-12 h-12 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white active:bg-white active:text-black transition-colors"
+            onClick={() => paginate(-1)}
+            className="hidden md:flex absolute -left-16 z-20 w-12 h-12 rounded-full border border-white/10 bg-white/5 items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:scale-110 transition-all duration-300"
           >
             <ArrowLeft size={20} />
           </button>
           <button
-            onClick={handleNext}
-            className="w-12 h-12 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white active:bg-white active:text-black transition-colors"
+            onClick={() => paginate(1)}
+            className="hidden md:flex absolute -right-16 z-20 w-12 h-12 rounded-full border border-white/10 bg-white/5 items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:scale-110 transition-all duration-300"
           >
             <ArrowRight size={20} />
           </button>
         </div>
 
-        {/* Progress Dots */}
-        <div className="flex justify-center gap-2 mt-8 md:mt-12">
+        {/* PROGRESS INDICATORS */}
+        <div className="flex justify-center gap-3 mt-12">
           {REVIEWS.map((_, i) => (
             <button
               key={i}
               onClick={() => {
-                setDirection(i > currentIndex ? 1 : -1);
-                setCurrentIndex(i);
+                const dir = i > currentIndex ? 1 : -1;
+                paginate(dir); // Note: Simple jump logic for dots isn't perfect with `paginate` direction, but sufficient here
+                setCurrentIndex(i); // Force set for dots
               }}
-              className={`h-1.5 rounded-full transition-all duration-500 ${
-                i === currentIndex
-                  ? "w-8 bg-purple-500"
-                  : "w-1.5 bg-white/20 hover:bg-white/40"
-              }`}
-            />
+              className="relative h-1.5 rounded-full overflow-hidden transition-all duration-300 bg-white/10 hover:bg-white/20"
+              style={{ width: i === currentIndex ? "40px" : "12px" }}
+            >
+              {i === currentIndex && (
+                <motion.div
+                  layoutId="active-indicator"
+                  className="absolute inset-0 bg-white"
+                />
+              )}
+            </button>
           ))}
         </div>
       </div>
