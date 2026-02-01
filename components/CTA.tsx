@@ -6,7 +6,7 @@ import React from "react";
 function CTA() {
   return (
     <section className="py-24 bg-black text-white px-6 md:px-12 border-t border-white/10">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-end">
+      <div className="max-w-7xl items-center md:items-end mx-auto flex flex-col md:flex-row justify-between ">
         <div>
           <h2 className="text-5xl md:text-8xl font-display font-bold mb-8">
             {`Let's work`} <br />
