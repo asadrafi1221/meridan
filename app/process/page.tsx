@@ -97,14 +97,12 @@ const Process: React.FC = () => {
     () => {
       ScrollTrigger.refresh();
 
-      // 1. Hero Reveal
       gsap.fromTo(
         ".hero-content",
         { y: 50, opacity: 0 },
         { y: 0, opacity: 1, duration: 1, ease: "power4.out", stagger: 0.2 },
       );
 
-      // 2. Draw the Central Line
       gsap.fromTo(
         ".timeline-line",
         { scaleY: 0 },
@@ -121,10 +119,9 @@ const Process: React.FC = () => {
         },
       );
 
-      // 3. Phase Animations (One by One)
       const phases = gsap.utils.toArray(".process-phase");
       phases.forEach((phase: any, i) => {
-        const direction = i % 2 === 0 ? -50 : 50; // Left or Right
+        const direction = i % 2 === 0 ? -50 : 50;
 
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -134,20 +131,17 @@ const Process: React.FC = () => {
           },
         });
 
-        // Animate Visual
         tl.fromTo(
           phase.querySelector(".phase-visual"),
           { x: direction, opacity: 0 },
           { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
         )
-          // Animate Content
           .fromTo(
             phase.querySelector(".phase-content"),
             { x: -direction, opacity: 0 },
             { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
-            "<", // Start at same time
+            "<",
           )
-          // Light up the center node
           .fromTo(
             phase.querySelector(".center-node"),
             { scale: 0, opacity: 0 },
@@ -164,7 +158,6 @@ const Process: React.FC = () => {
       ref={containerRef}
       className="bg-[#050505] text-white selection:bg-purple-500/30 overflow-hidden w-full min-h-screen"
     >
-      {/* Background Noise/Grid */}
       <div
         className="fixed inset-0 opacity-[0.03] pointer-events-none -z-10"
         style={{
@@ -206,7 +199,7 @@ const Process: React.FC = () => {
             </span>
           </h1>
 
-          <p className="hero-content text-lg  text-[#a1a1aa] font-light max-w-3xl mx-auto leading-relaxed">
+          <p className="hero-content text-lg text-[#a1a1aa] font-light max-w-3xl mx-auto leading-relaxed">
             Communication is chaotic. Collaboration shouldn’t be.{" "}
             <br className="hidden md:block" />
             We use a real-tested framework to ensure your business is{" "}
@@ -221,7 +214,6 @@ const Process: React.FC = () => {
 
       {/* Process Grid */}
       <div className="process-container max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-20 relative">
-        {/* The Central Line */}
         <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-white/10 hidden md:block">
           <div className="timeline-line w-full h-full bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 origin-top" />
         </div>
@@ -242,12 +234,9 @@ const Process: React.FC = () => {
               {/* Visual Side */}
               <div className="phase-visual w-full md:w-1/2 flex justify-center">
                 <div className="relative w-full max-w-md aspect-[4/3] bg-[#0A0A0A] rounded-3xl border border-white/10 overflow-hidden group">
-                  {/* Background Gradient */}
                   <div
                     className={`absolute inset-0 bg-gradient-to-br ${phase.gradient} opacity-20 group-hover:opacity-30 transition-opacity duration-500`}
                   />
-
-                  {/* Grid Pattern */}
                   <div
                     className="absolute inset-0 opacity-20 pointer-events-none"
                     style={{
@@ -257,7 +246,6 @@ const Process: React.FC = () => {
                     }}
                   />
 
-                  {/* Icon */}
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-24 h-24 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-500 shadow-2xl">
                       <phase.icon
@@ -268,7 +256,6 @@ const Process: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Floating Tool Pills */}
                   <div className="absolute bottom-6 left-6 right-6 flex flex-wrap gap-2 justify-center">
                     {phase.tools.map((tool, i) => (
                       <span
@@ -282,16 +269,17 @@ const Process: React.FC = () => {
                 </div>
               </div>
 
-              {/* Content Side */}
+              {/* Content Side - Modified for mobile centering */}
               <div className="phase-content w-full md:w-1/2">
                 <div
-                  className={`flex flex-col ${
+                  className={`flex flex-col items-center text-center ${
                     index % 2 === 0
                       ? "md:items-start md:text-left"
                       : "md:items-end md:text-right"
                   }`}
                 >
-                  <span className="text-8xl font-display font-bold text-white/5 mb-4 select-none absolute -top-10 opacity-50 pointer-events-none">
+                  {/* Phase ID Number - Centered on mobile */}
+                  <span className="text-8xl font-display font-bold text-white/5 mb-4 select-none absolute -top-10 md:static opacity-50 pointer-events-none left-1/2 -translate-x-1/2 md:translate-x-0">
                     {phase.id}
                   </span>
 
@@ -312,24 +300,25 @@ const Process: React.FC = () => {
                     {phase.desc}
                   </p>
 
-                  <div
-                    className={`bg-[#111] rounded-2xl p-6 w-full max-w-md border border-white/5 hover:border-white/10 transition-colors`}
-                  >
-                    <h4 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4 flex items-center gap-2 justify-between">
-                      <span>Deliverables</span>
-                      <div className="h-px bg-white/10 flex-1 ml-4" />
+                  <div className="bg-[#111] rounded-2xl p-6 w-full max-w-md border border-white/5 hover:border-white/10 transition-colors">
+                    <h4 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4 flex items-center gap-2 justify-center md:justify-between">
+                      <span className="hidden md:inline">Deliverables</span>
+                      <span className="md:hidden">Our Deliverables</span>
+                      <div className="h-px bg-white/10 flex-1 ml-4 hidden md:block" />
                     </h4>
                     <ul className="space-y-3">
                       {phase.deliverables.map((item, i) => (
                         <li
                           key={i}
-                          className={`text-sm font-medium text-gray-300 flex items-center gap-3 ${
-                            index % 2 !== 0 ? "md:flex-row-reverse" : ""
+                          className={`text-sm font-medium text-gray-300 flex items-center gap-3 justify-center ${
+                            index % 2 === 0
+                              ? "md:justify-start"
+                              : "md:justify-end md:flex-row-reverse"
                           }`}
                         >
                           <div
                             className={`w-1.5 h-1.5 rounded-full ${phase.color.replace("text-", "bg-")}`}
-                          ></div>
+                          />
                           {item}
                         </li>
                       ))}
@@ -342,7 +331,6 @@ const Process: React.FC = () => {
         </div>
       </div>
 
-      {/* Bottom CTA */}
       <CTA />
     </div>
   );

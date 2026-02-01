@@ -70,11 +70,12 @@ const Contact: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 relative z-10">
-        {/* LEFT */}
+        {/* LEFT SECTION - UPDATED FOR MOBILE CENTERING */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
+          className="flex flex-col items-center md:items-start text-center md:text-left"
         >
           <h1 className="text-5xl sm:text-6xl md:text-8xl font-semibold mb-10 leading-[0.9]">
             Let’s talk <br />
@@ -83,17 +84,17 @@ const Contact: React.FC = () => {
             </span>
           </h1>
 
-          <p className="text-lg  md:text-lg text-gray-400 mb-16 max-w-lg">
+          <p className="text-lg md:text-lg text-gray-400 mb-16 max-w-lg mx-auto md:mx-0">
             Tell us about your challenges. No hard sales just an honest
             conversation.
           </p>
 
-          <div className="space-y-10">
-            <div className="flex gap-6">
+          <div className="space-y-10 w-full flex flex-col items-center md:items-start">
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
               <div className="p-4 bg-white/5 border border-white/10 rounded-full">
                 <Mail />
               </div>
-              <div>
+              <div className="flex flex-col items-center md:items-start">
                 <h3 className="font-bold text-xl">Email Us</h3>
                 <p className="text-gray-400">mike.gmbrankup@gmail.com</p>
               </div>
@@ -101,7 +102,7 @@ const Contact: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* FORM */}
+        {/* FORM SECTION */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -148,13 +149,15 @@ const Contact: React.FC = () => {
               name="projectType"
               value={form.projectType}
               onChange={handleChange}
-              className="w-full bg-white/5 border-b-2 border-white/10 p-4 text-white focus:border-purple-500 outline-none"
+              className="w-full bg-white/5 border-b-2 border-white/10 p-4 text-white focus:border-purple-500 outline-none appearance-none"
             >
-              <option value="">Select project type</option>
-              <option>Web Development</option>
-              <option>Growth Marketing</option>
-              <option>SEO & Content</option>
-              <option>Full Digital Transformation</option>
+              <option value="" className="bg-black">
+                Select project type
+              </option>
+              <option className="bg-black">Web Development</option>
+              <option className="bg-black">Growth Marketing</option>
+              <option className="bg-black">SEO & Content</option>
+              <option className="bg-black">Full Digital Transformation</option>
             </select>
 
             <textarea
@@ -166,10 +169,10 @@ const Contact: React.FC = () => {
               className="w-full bg-white/5 border-b-2 border-white/10 p-4 text-white focus:border-purple-500 outline-none resize-none"
             />
 
-            <div className="flex items-center justify-center">
+            {/* Button container - Centers on mobile, Left on desktop */}
+            <div className="flex items-center justify-center md:justify-start">
               <Button
                 size="lg"
-                fullWidth
                 style={{ background: BRAND_GRADIENT }}
                 disabled={loading}
                 className="w-full sm:w-auto min-w-[160px] shadow-[0_0_30px_rgba(120,50,255,0.25)] text-white border-0 font-semibold h-12 rounded-xl text-sm transition-transform hover:scale-105"

@@ -72,7 +72,6 @@ const GlassCard = ({
       className={`group relative overflow-hidden rounded-[24px] border border-white/10 bg-[#080808] ${className}`}
       onMouseMove={handleMouseMove}
     >
-      {/* Dynamic Highlight */}
       <motion.div
         className="pointer-events-none absolute -inset-px opacity-0 transition duration-500 group-hover:opacity-100"
         style={{
@@ -85,7 +84,6 @@ const GlassCard = ({
           `,
         }}
       />
-      {/* Brand Gradient Border Glow (Optional) */}
       {gradient && (
         <div
           className="absolute inset-x-0 top-0 h-px opacity-50"
@@ -96,8 +94,6 @@ const GlassCard = ({
     </div>
   );
 };
-
-// --- ANIMATED WIDGETS ---
 
 const SimulatedTerminal = () => {
   const [lines, setLines] = useState([
@@ -146,8 +142,6 @@ const SimulatedTerminal = () => {
   );
 };
 
-// --- MAIN PAGE ---
-
 const About: React.FC = () => {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -163,17 +157,13 @@ const About: React.FC = () => {
       ref={containerRef}
       className="bg-[#020202] min-h-screen text-white selection:bg-purple-500/30 overflow-x-hidden font-sans"
     >
-      {/* --- AMBIENT LAYER --- */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-        {/* Noise Grain */}
         <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
-        {/* Top Glow */}
         <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-purple-600/10 rounded-full blur-[120px]" />
       </div>
 
       {/* --- HERO SECTION --- */}
       <section className="relative h-screen flex flex-col items-center justify-center px-6 border-b border-white/5 overflow-hidden">
-        {/* Grid Background */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(circle_at_center,black,transparent_80%)]" />
 
         <motion.div
@@ -197,34 +187,19 @@ const About: React.FC = () => {
             </span>
           </h1>
 
-          <p className="mt-8 text-lg px-8 md:px-0 md:text-xl text-neutral-400 max-w-2xl mx-auto font-light leading-relaxed">
-            {`  Stop treating Google Maps like social media. It's a`}{" "}
+          <p className="mt-8 text-lg px-8 md:px-0 md:text-xl text-neutral-400 max-w-2xl mx-auto font-light leading-relaxed text-center">
+            {`Stop treating Google Maps like social media. It's a`}{" "}
             <span className="text-white">database</span>. We are the database
             architects who force the algorithm to rank you #1.
           </p>
-
-          <div className="mt-12 hidden lg:flex flex-col md:flex-row items-center justify-center gap-4">
-            {/* Tech Stack Marquee */}
-            <div className="flex gap-6 text-xs font-mono text-neutral-600 uppercase tracking-widest">
-              {TECH_STACK.slice(0, 4).map((tech, i) => (
-                <span key={i} className="flex items-center gap-2">
-                  <Cpu size={12} /> {tech}
-                </span>
-              ))}
-            </div>
-          </div>
         </motion.div>
-
-        {/* Radar Effect at Bottom */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-gradient-to-t from-purple-900/10 to-transparent blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
       </section>
 
       {/* --- BENTO GRID SYSTEM --- */}
       <section className="py-32 px-4 md:px-6 max-w-[1400px] mx-auto relative z-10">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 px-2">
-          <div>
+        {/* Section Header - UPDATED FOR MOBILE CENTERING */}
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 px-2 text-center md:text-left">
+          <div className="mb-6 md:mb-0">
             <h2 className="text-4xl md:text-5xl font-display font-medium text-white mb-4">
               The{" "}
               <span
@@ -234,7 +209,7 @@ const About: React.FC = () => {
                 Optimization Matrix
               </span>
             </h2>
-            <p className="text-neutral-500 max-w-md text-lg">
+            <p className="text-neutral-500 max-w-md text-lg mx-auto md:mx-0">
               Our proprietary infrastructure designed to signal maximum
               authority to Google.
             </p>
@@ -248,12 +223,12 @@ const About: React.FC = () => {
 
         {/* THE GRID */}
         <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12 auto-rows-[280px] gap-6">
-          {/* CARD 1: HYPER LOCAL (Map) */}
+          {/* CARD 1: HYPER LOCAL - UPDATED FOR MOBILE CENTERING */}
           <GlassCard className="md:col-span-2 lg:col-span-4 lg:row-span-2 bg-gradient-to-b from-white/[0.02] to-transparent">
-            <div className="p-8 h-full flex flex-col justify-between relative">
+            <div className="p-8 h-full flex flex-col justify-between relative text-center md:text-left items-center md:items-start">
               <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]" />
 
-              <div className="relative z-10">
+              <div className="relative z-10 w-full flex flex-col items-center md:items-start">
                 <div className="w-10 h-10 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center mb-6 text-purple-400">
                   <MapPin size={20} />
                 </div>
@@ -261,17 +236,13 @@ const About: React.FC = () => {
                   Geo-Grid Dominance
                 </h3>
                 <p className="text-neutral-400 text-sm leading-relaxed">
-                  {`   We don't just target a city. We target specific coordinates,
-                  creating a net of relevance across your entire service area.`}
+                  {`We don't just target a city. We target specific coordinates, creating a net of relevance across your entire service area.`}
                 </p>
               </div>
 
-              {/* Abstract Radar Visual */}
               <div className="relative h-32 w-full mt-4 border-t border-white/10 pt-4 flex items-center justify-center overflow-hidden">
                 <div className="absolute w-[200%] h-[200%] border border-purple-500/20 rounded-full animate-[spin_10s_linear_infinite]" />
-                <div className="absolute w-[150%] h-[150%] border border-purple-500/10 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
                 <div className="w-3 h-3 bg-white rounded-full shadow-[0_0_20px_white]" />
-                {/* Scanning Line */}
                 <div className="absolute top-1/2 left-1/2 w-[50%] h-px bg-gradient-to-r from-purple-500 to-transparent origin-left animate-[spin_3s_linear_infinite]" />
               </div>
             </div>
@@ -292,18 +263,19 @@ const About: React.FC = () => {
             </div>
           </GlassCard>
 
-          {/* CARD 3: KEYWORDS (Tags) */}
-          <GlassCard className="md:col-span-2 lg:col-span-4 flex flex-col justify-center p-8 bg-gradient-to-br from-purple-900/10 to-black">
+          {/* CARD 3: KEYWORDS - UPDATED FOR MOBILE CENTERING */}
+          <GlassCard className="md:col-span-2 lg:col-span-4 flex flex-col justify-center p-8 bg-gradient-to-br from-purple-900/10 to-black text-center md:text-left items-center md:items-start">
             <div className="mb-4">
-              <Search className="text-white/50 mb-4" size={24} />
+              <Search
+                className="text-white/50 mb-4 mx-auto md:mx-0"
+                size={24}
+              />
               <h3 className="text-xl font-medium text-white">
                 Semantic Search
               </h3>
-              <p className="text-sm text-neutral-500">
-                {` We speak Google's NLP language.`}
-              </p>
+              <p className="text-sm text-neutral-500">{`We speak Google's NLP language.`}</p>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 justify-center md:justify-start">
               {[
                 "Best rated",
                 "Near me",
@@ -315,19 +287,19 @@ const About: React.FC = () => {
                   key={i}
                   className="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] text-purple-200 font-mono"
                 >
-                  {` ${tag}`}
+                  {tag}
                 </span>
               ))}
             </div>
           </GlassCard>
 
-          {/* CARD 4: CONVERSION (Graph) */}
+          {/* CARD 4: CONVERSION - UPDATED FOR MOBILE CENTERING */}
           <GlassCard
             gradient
-            className="md:col-span-2 lg:col-span-5 lg:row-span-1 p-8 flex items-center justify-between"
+            className="md:col-span-2 lg:col-span-5 lg:row-span-1 p-8 flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-6 md:gap-0"
           >
             <div>
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
                 <span className="text-green-500 text-xs font-bold uppercase tracking-wider">
                   Live Metrics
@@ -351,29 +323,26 @@ const About: React.FC = () => {
             </div>
           </GlassCard>
 
-          {/* CARD 5: SPAM FIGHTING (Shield) */}
-          <GlassCard className="md:col-span-2 lg:col-span-3 p-6 flex flex-col justify-between">
-            <div className="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
+          {/* CARD 5: SPAM FIGHTING - UPDATED FOR MOBILE CENTERING */}
+          <GlassCard className="md:col-span-2 lg:col-span-3 p-6 flex flex-col justify-between text-center md:text-left items-center md:items-start">
+            <div className="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-4 md:mb-0">
               <Shield size={20} />
             </div>
             <div>
               <h4 className="text-white font-medium mb-1">Spam Assassin</h4>
-              <p className="text-xs text-neutral-500">
-                {`We report and remove your competitors' fake listings.`}
-              </p>
+              <p className="text-xs text-neutral-500">{`We report and remove your competitors' fake listings.`}</p>
             </div>
           </GlassCard>
 
-          {/* CARD 6: REVIEWS (Quote) */}
-          <GlassCard className="md:col-span-4 lg:col-span-4 p-8 flex flex-col justify-center bg-white/[0.02]">
+          {/* CARD 6: REVIEWS - UPDATED FOR MOBILE CENTERING */}
+          <GlassCard className="md:col-span-4 lg:col-span-4 p-8 flex flex-col justify-center items-center md:items-start text-center md:text-left bg-white/[0.02]">
             <Database className="text-neutral-700 mb-6" />
-            <h3 className="text-lg text-white font-light leading-relaxed mb-4">
-              {` "Our previous agency just posted on Facebook. GMB Optimization
-              actually fixed our data layer. Calls doubled in 30 days."`}
+            <h3 className="text-lg text-white font-light leading-relaxed mb-4 italic">
+              {` "Our previous agency just posted on Facebook. GMB Optimization actually fixed our data layer. Calls doubled in 30 days."`}
             </h3>
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500" />
-              <div>
+              <div className="text-left">
                 <div className="text-xs font-bold text-white">David Chen</div>
                 <div className="text-[10px] text-neutral-500 uppercase">
                   CEO, Apex Logistics
@@ -384,7 +353,7 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* --- COMPARISON TABLE (Dark Mode Style) --- */}
+      {/* --- COMPARISON TABLE --- */}
       <section className="py-24 border-t border-white/5">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -394,14 +363,14 @@ const About: React.FC = () => {
           </div>
 
           <div className="bg-white/[0.02] border border-white/10 rounded-3xl overflow-hidden backdrop-blur-sm">
-            <div className="grid grid-cols-3 border-b border-white/5 bg-white/[0.02]">
-              <div className="p-6 text-xs font-mono text-neutral-500 uppercase tracking-widest">
+            <div className="grid grid-cols-3 border-b border-white/5 bg-white/[0.02] text-center">
+              <div className="p-4 md:p-6 text-[10px] md:text-xs font-mono text-neutral-500 uppercase tracking-widest">
                 Strategy
               </div>
-              <div className="p-6 text-xs font-mono text-neutral-500 uppercase tracking-widest border-l border-white/5">
+              <div className="p-4 md:p-6 text-[10px] md:text-xs font-mono text-neutral-500 uppercase tracking-widest border-l border-white/5">
                 Typical Agency
               </div>
-              <div className="p-6 text-xs font-mono text-purple-400 uppercase tracking-widest border-l border-white/5 bg-purple-500/5">
+              <div className="p-4 md:p-6 text-[10px] md:text-xs font-mono text-purple-400 uppercase tracking-widest border-l border-white/5 bg-purple-500/5">
                 GMB Optimization
               </div>
             </div>
@@ -430,16 +399,17 @@ const About: React.FC = () => {
             ].map((row, i) => (
               <div
                 key={i}
-                className="grid grid-cols-3 border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-colors"
+                className="grid grid-cols-3 border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-colors text-center md:text-left"
               >
-                <div className="p-6 text-sm font-medium text-white">
+                <div className="p-4 md:p-6 text-xs md:text-sm font-medium text-white flex items-center justify-center md:justify-start">
                   {row.title}
                 </div>
-                <div className="p-6 text-sm text-neutral-500 border-l border-white/5">
+                <div className="p-4 md:p-6 text-xs md:text-sm text-neutral-500 border-l border-white/5 flex items-center justify-center md:justify-start">
                   {row.bad}
                 </div>
-                <div className="p-6 text-sm text-white border-l border-white/5 bg-purple-500/5 font-medium flex items-center gap-2">
-                  <Zap size={14} className="text-purple-400" /> {row.good}
+                <div className="p-4 md:p-6 text-xs md:text-sm text-white border-l border-white/5 bg-purple-500/5 font-medium flex items-center justify-center md:justify-start gap-2">
+                  <Zap size={14} className="text-purple-400 hidden md:block" />{" "}
+                  {row.good}
                 </div>
               </div>
             ))}
@@ -447,7 +417,6 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* --- CTA SECTION --- */}
       <CTA />
     </div>
   );
