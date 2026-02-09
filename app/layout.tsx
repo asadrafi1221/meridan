@@ -40,7 +40,7 @@ export default function RootLayout({
       className={`${manrope.variable} ${syne.variable} ${mono.variable}`}
     >
       <head>
-        <link rel="icon" href="/logo-gmb.svg" />
+        <link rel="icon" href="/header-logo.svg" />
       </head>
       <body className="antialiased selection:bg-[#0a0a0a] selection:text-white bg-[#fafafa] text-[#0a0a0a]">
         <Header />
