@@ -34,15 +34,16 @@ export const Footer = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
             {/* Brand */}
             <div className="flex flex-col gap-6">
-              <span className="text-sm font-display font-black text-white tracking-tight">
-                GMB
-                <span
-                  className="text-transparent text-sm pl-2 bg-clip-text"
-                  style={{ backgroundImage: BRAND_GRADIENT }}
-                >
-                  OPTIMIZATION
-                </span>
-              </span>
+              <Link
+                href="/"
+                className="font-extrabold  text-white text-xl tracking-tighter shrink-0"
+              >
+                <img
+                  src="/header-logo.svg"
+                  alt="Logo"
+                  className="size-14 relative "
+                />
+              </Link>
               <p className="text-[#a1a1aa] text-sm leading-relaxed max-w-xs">
                 A strategic design and technology partner for companies looking
                 to scale at global standards.
