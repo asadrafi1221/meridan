@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React, { useRef, useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 interface TiltCardProps {
   children: React.ReactNode;
@@ -7,10 +7,10 @@ interface TiltCardProps {
   intensity?: number;
 }
 
-export const TiltCard: React.FC<TiltCardProps> = ({ 
-  children, 
+export const TiltCard: React.FC<TiltCardProps> = ({
+  children,
   className = "",
-  intensity = 20 
+  intensity = 20,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -20,8 +20,16 @@ export const TiltCard: React.FC<TiltCardProps> = ({
   const mouseXSpring = useSpring(x);
   const mouseYSpring = useSpring(y);
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [intensity, -intensity]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [-intensity, intensity]);
+  const rotateX = useTransform(
+    mouseYSpring,
+    [-0.5, 0.5],
+    [intensity, -intensity],
+  );
+  const rotateY = useTransform(
+    mouseXSpring,
+    [-0.5, 0.5],
+    [-intensity, intensity],
+  );
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
@@ -58,7 +66,9 @@ export const TiltCard: React.FC<TiltCardProps> = ({
       }}
       className={`relative ${className}`}
     >
-      <div style={{ transform: "translateZ(50px)", transformStyle: "preserve-3d" }}>
+      <div
+        style={{ transform: "translateZ(50px)", transformStyle: "preserve-3d" }}
+      >
         {children}
       </div>
     </motion.div>

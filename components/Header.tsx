@@ -15,6 +15,7 @@ import {
   Phone,
   MessageSquare,
 } from "lucide-react";
+import Image from "next/image";
 
 const LiquidNavbar = () => {
   const pathname = usePathname();
@@ -134,9 +135,13 @@ const LiquidNavbar = () => {
           {/* Logo */}
           <Link
             href="/"
-            className="font-extrabold text-white text-xl tracking-tighter shrink-0"
+            className="font-extrabold  text-white text-xl tracking-tighter shrink-0"
           >
-            GMB<span className="text-purple-500">.</span>
+            <img
+              src="/logo.png"
+              alt="Logo"
+              className="size-20 relative right-5"
+            />
           </Link>
 
           {!isMobile ? (

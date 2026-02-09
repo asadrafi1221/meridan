@@ -1,3 +1,4 @@
+// app/layout.tsx
 import { Manrope, Syne, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
@@ -34,11 +35,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    // Added ${mono.variable} to the className below
     <html
       lang="en"
       className={`${manrope.variable} ${syne.variable} ${mono.variable}`}
     >
+      <head>
+        <link rel="icon" href="/logo-gmb.svg" />
+      </head>
       <body className="antialiased selection:bg-[#0a0a0a] selection:text-white bg-[#fafafa] text-[#0a0a0a]">
         <Header />
         {children}

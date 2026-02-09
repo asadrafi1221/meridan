@@ -266,7 +266,7 @@ export default function GBPPage() {
                 Local <span className="text-red-500">Invisibility</span>
               </h2>
               <p className="text-gray-500 max-w-md">
-                If you aren't in the 3-Pack, you don't exist to local buyers.
+                {`If you aren't in the 3-Pack, you don't exist to local buyers.`}
               </p>
             </div>
             <div className="h-px bg-white/10 flex-1 ml-8 mb-4 hidden md:block" />
