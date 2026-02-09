@@ -6,7 +6,6 @@ import {
   ArrowUpRight,
   Mail,
   Instagram,
-  Twitter,
   Linkedin,
   Facebook,
   Youtube,
@@ -22,7 +21,6 @@ const SOCIAL_LINKS = [
   { name: "Instagram", icon: Instagram, href: "#" },
   { name: "LinkedIn", icon: Linkedin, href: "#" },
   { name: "YouTube", icon: Youtube, href: "#" },
-  { name: "X.com", icon: Twitter, href: "#" },
 ];
 
 export const Footer = () => {
