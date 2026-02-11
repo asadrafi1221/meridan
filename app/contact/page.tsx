@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/Button";
 import { LocationEdit, Mail, Phone } from "lucide-react";
 import { motion } from "framer-motion";
-import { BRAND_GRADIENT, constant_emailjs_values } from "@/constant";
+import { BRAND_GRADIENT } from "@/constant";
 import emailjs from "@emailjs/browser";
 
 const Contact: React.FC = () => {
@@ -35,8 +35,8 @@ const Contact: React.FC = () => {
 
     try {
       const result = await emailjs.send(
-        constant_emailjs_values.EMAIL_SERVICE_ID, // Service ID
-        constant_emailjs_values.EMAIL_TEMPLATE, // Template ID
+        process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID!, // Service ID
+        process.env.NEXT_PUBLIC_EMAIL_TEMPLATE!, // Template ID
         {
           name: `${form.firstName} ${form.lastName}`,
           firstName: form.firstName,
@@ -47,7 +47,7 @@ const Contact: React.FC = () => {
           message: form.message,
           time: new Date().toLocaleString(),
         },
-        constant_emailjs_values.EMAIL_PUBLIC_KEY, // Public Key
+        process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY!, // Public Key
       );
 
       if (result.status === 200) {
