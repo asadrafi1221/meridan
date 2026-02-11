@@ -5,6 +5,7 @@ import { Button } from "@/components/Button";
 import { LocationEdit, Mail, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 import { BRAND_GRADIENT } from "@/constant";
+import emailjs from "@emailjs/browser";
 
 const Contact: React.FC = () => {
   const [form, setForm] = useState({
@@ -30,14 +31,26 @@ const Contact: React.FC = () => {
     e.preventDefault();
     setLoading(true);
 
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
+    console.log("form :", form);
 
-      if (res.ok) {
+    try {
+      const result = await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID!, // Service ID
+        process.env.NEXT_PUBLIC_EMAIL_TEMPLATE!, // Template ID
+        {
+          name: `${form.firstName} ${form.lastName}`,
+          firstName: form.firstName,
+          lastName: form.lastName,
+          email: form.email,
+          phone: form.phone,
+          projectType: form.projectType,
+          message: form.message,
+          time: new Date().toLocaleString(),
+        },
+        process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY!, // Public Key
+      );
+
+      if (result.status === 200) {
         setForm({
           firstName: "",
           lastName: "",
@@ -47,6 +60,8 @@ const Contact: React.FC = () => {
           message: "",
         });
       }
+    } catch (error) {
+      console.error("EmailJS Error:", error);
     } finally {
       setLoading(false);
     }
@@ -54,7 +69,6 @@ const Contact: React.FC = () => {
 
   return (
     <div className="bg-[#050505] min-h-screen pt-32 md:pt-40 pb-24 px-4 md:px-6 relative overflow-hidden text-white selection:bg-purple-500/30">
-      {/* Background */}
       <div className="absolute inset-0 z-0">
         <div
           className="absolute inset-0 opacity-[0.03]"
@@ -69,7 +83,6 @@ const Contact: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 relative z-10">
-        {/* LEFT SECTION - UPDATED FOR MOBILE CENTERING */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -137,7 +150,6 @@ const Contact: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* FORM SECTION */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -153,7 +165,6 @@ const Contact: React.FC = () => {
                 placeholder="First Name"
                 className="w-full bg-white/5 border-b-2 border-white/10 p-4 text-white focus:border-purple-500 outline-none"
               />
-
               <input
                 name="lastName"
                 value={form.lastName}
@@ -171,7 +182,6 @@ const Contact: React.FC = () => {
               type="email"
               className="w-full bg-white/5 border-b-2 border-white/10 p-4 text-white focus:border-purple-500 outline-none"
             />
-
             <input
               name="phone"
               value={form.phone}
@@ -189,7 +199,6 @@ const Contact: React.FC = () => {
               <option value="" className="bg-black">
                 Select project type
               </option>
-
               <option value="Free Business Audit" className="bg-black">
                 Free Business Audit
               </option>
@@ -234,7 +243,6 @@ const Contact: React.FC = () => {
               className="w-full bg-white/5 border-b-2 border-white/10 p-4 text-white focus:border-purple-500 outline-none resize-none"
             />
 
-            {/* Button container - Centers on mobile, Left on desktop */}
             <div className="flex items-center justify-center md:justify-start">
               <Button
                 size="lg"
