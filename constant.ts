@@ -340,3 +340,9 @@ export const CAPABILITIES = [
     path: "/services/ai-solutions",
   },
 ];
+
+export const constant_emailjs_values = {
+  EMAIL_TEMPLATE: "template_pzkqzld",
+  EMAIL_PUBLIC_KEY: "2z1QhYZgFc75u1jla",
+  EMAIL_SERVICE_ID: "service_hl2lw1s",
+};
