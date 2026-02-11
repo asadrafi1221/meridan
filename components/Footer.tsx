@@ -9,7 +9,9 @@ import {
   Linkedin,
   Facebook,
   Youtube,
-  ArrowRight, // Added for the button
+  ArrowRight,
+  Phone,
+  LocationEdit, // Added for the button
 } from "lucide-react";
 
 // Bringing in the gradient for consistency
@@ -109,9 +111,10 @@ export const Footer = () => {
               <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#737373] mb-6">
                 Inquiries
               </h4>
+
               <div className="flex flex-col gap-4">
                 <a
-                  href="mailto:hello@meridian.agency"
+                  href="mailto:mike.gmbrankup@gmail.com"
                   className="text-white text-lg font-medium hover:text-purple-400 transition-colors flex items-center gap-2 group"
                 >
                   <Mail
@@ -120,8 +123,35 @@ export const Footer = () => {
                   />
                   mike.gmbrankup@gmail.com
                 </a>
+
+                <a
+                  href="https://wa.me/923151885725"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white text-lg font-medium hover:text-purple-400 transition-colors flex items-center gap-2 group"
+                >
+                  <Phone
+                    size={16}
+                    className="group-hover:-translate-y-1 transition-transform duration-300"
+                  />
+                  +92 315 1885725
+                </a>
+
+                <a
+                  href="https://www.google.com/maps/place/Melbourne,+Australia"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white text-lg font-medium hover:text-purple-400 transition-colors flex items-center gap-2 group"
+                >
+                  <LocationEdit
+                    size={16}
+                    className="group-hover:-translate-y-1 transition-transform duration-300"
+                  />
+                  Melbourne, Australia
+                </a>
+
                 <p className="text-[#555] text-xs leading-relaxed">
-                  Lahore, Pakistan <br /> Global Operations
+                  Global Operations
                 </p>
               </div>
             </div>
@@ -131,7 +161,7 @@ export const Footer = () => {
               {/* Waitlist Input */}
               <div>
                 <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#737373] mb-4">
-                  Join The Waitlist
+                  News Letter
                 </h4>
                 <form className="flex flex-col gap-3">
                   <input
@@ -150,6 +180,10 @@ export const Footer = () => {
                     Join Now <ArrowRight size={14} />
                   </button>
                 </form>
+
+                <p className="text-xs text-center mt-5 text-gray-400">
+                  Subscribe to our newsletter to get the latest updates & news.
+                </p>
               </div>
             </div>
           </div>

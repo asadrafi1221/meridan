@@ -3,6 +3,7 @@ import { Manrope, Syne, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { Phone } from "lucide-react";
 
 // 1. Configure Manrope (Sans Font)
 const manrope = Manrope({
@@ -46,6 +47,15 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <a
+          href="https://wa.me/923151885725"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="fixed bottom-6 right-6 z-[1000] bg-[#25D366] hover:bg-[#1ebe5d] text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 flex items-center justify-center"
+          aria-label="Chat on WhatsApp"
+        >
+          <Phone size={24} />
+        </a>
       </body>
     </html>
   );

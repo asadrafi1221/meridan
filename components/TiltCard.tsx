@@ -5,12 +5,14 @@ interface TiltCardProps {
   children: React.ReactNode;
   className?: string;
   intensity?: number;
+  onPush: () => void;
 }
 
 export const TiltCard: React.FC<TiltCardProps> = ({
   children,
   className = "",
   intensity = 20,
+  onPush,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -57,6 +59,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
   return (
     <motion.div
       ref={ref}
+      onClick={onPush}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{

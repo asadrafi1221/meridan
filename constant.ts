@@ -21,14 +21,14 @@ export const NAV_ITEMS = [
     label: "Services",
     path: "/services",
     children: [
-      { label: "AI Solutions", path: "/services/ai-solutions" },
-      { label: "Branding", path: "/services/branding" },
       { label: "GBP Optimization", path: "/services/gbp-optimization" },
-      { label: "Google Ads", path: "/services/google-ads" },
       { label: "SEO", path: "/services/seo" },
-      { label: "Web Development", path: "/services/web-developement" },
+      { label: "Web Development", path: "/services/web-development" },
       { label: "Landing Page", path: "/services/landing-page" },
-      { label: "SMM", path: "/services/smm" },
+      { label: "Social Media Marketing", path: "/services/smm" },
+      { label: "Google Ads", path: "/services/google-ads" },
+      { label: "Branding", path: "/services/branding" },
+      { label: "AI Solutions", path: "/services/ai-solutions" },
     ],
   },
   { label: "How We Work", path: "/process" },
@@ -313,6 +313,7 @@ export const CAPABILITIES = [
     description: "Dominate Competitors...",
     icon: MapPin,
     outcome: "Local Dominance",
+    path: "/services/gbp-optimization",
   },
   {
     id: "web",
@@ -320,6 +321,7 @@ export const CAPABILITIES = [
     description: "High performance web design...",
     icon: Layout,
     outcome: "High Conversion",
+    path: "/services/web-developement",
   },
   {
     id: "seo",
@@ -327,6 +329,7 @@ export const CAPABILITIES = [
     description: "Align your website with user intent...",
     icon: Search,
     outcome: "Max Visibility",
+    path: "/services/seo",
   },
   {
     id: "ai",
@@ -334,5 +337,6 @@ export const CAPABILITIES = [
     description: "Deploy intelligent voice agents...",
     icon: Bot,
     outcome: "24/7 Automation",
+    path: "/services/ai-solutions",
   },
 ];

@@ -22,6 +22,7 @@ import {
 } from "@/constant";
 import { Reviews } from "@/components/Reviews";
 import CTA from "@/components/CTA";
+import { redirect } from "next/navigation";
 
 // Register GSAP
 gsap.registerPlugin(ScrollTrigger);
@@ -342,7 +343,11 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.05 }}
               >
-                <TiltCard intensity={10} className="h-full">
+                <TiltCard
+                  intensity={10}
+                  className="h-full"
+                  onPush={() => redirect(service?.path)}
+                >
                   <div className="group h-full p-8 rounded-2xl bg-[#0F0F0F] hover:bg-[#141414] border border-white/5 hover:border-white/10 transition-all duration-300 flex flex-col justify-between min-h-[300px] relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 via-transparent to-pink-500/0 group-hover:from-purple-500/5 group-hover:to-pink-500/5 transition-colors duration-500" />
                     <div className="relative z-10">

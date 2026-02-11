@@ -2,9 +2,8 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/Button";
-import { Mail, MessageSquare } from "lucide-react";
+import { LocationEdit, Mail, Phone } from "lucide-react";
 import { motion } from "framer-motion";
-import CTA from "@/components/CTA";
 import { BRAND_GRADIENT } from "@/constant";
 
 const Contact: React.FC = () => {
@@ -96,7 +95,43 @@ const Contact: React.FC = () => {
               </div>
               <div className="flex flex-col items-center md:items-start">
                 <h3 className="font-bold text-xl">Email Us</h3>
-                <p className="text-gray-400">mike.gmbrankup@gmail.com</p>
+                <a
+                  href="mailto:mike.gmbrankup@gmail.com"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  mike.gmbrankup@gmail.com
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-10 mt-5 w-full flex flex-col items-center md:items-start">
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+              <div className="p-4 bg-white/5 border border-white/10 rounded-full">
+                <Phone />
+              </div>
+              <div className="flex flex-col items-center md:items-start">
+                <h3 className="font-bold text-xl">Whatsapp</h3>
+                <a
+                  href="https://wa.me/923151885725"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  +92 315 1885725
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-10 mt-5 w-full flex flex-col items-center md:items-start">
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+              <div className="p-4 bg-white/5 border border-white/10 rounded-full">
+                <LocationEdit />
+              </div>
+              <div className="flex flex-col items-center md:items-start">
+                <h3 className="font-bold text-xl">Location</h3>
+                <p className="text-gray-400">Melbourne, Australia</p>
               </div>
             </div>
           </div>
@@ -154,10 +189,40 @@ const Contact: React.FC = () => {
               <option value="" className="bg-black">
                 Select project type
               </option>
-              <option className="bg-black">Web Development</option>
-              <option className="bg-black">Growth Marketing</option>
-              <option className="bg-black">SEO & Content</option>
-              <option className="bg-black">Full Digital Transformation</option>
+
+              <option value="Free Business Audit" className="bg-black">
+                Free Business Audit
+              </option>
+              <option value="Request Meeting" className="bg-black">
+                Request Meeting
+              </option>
+              <option value="GBP Optimization" className="bg-black">
+                GBP Optimization
+              </option>
+              <option value="SEO" className="bg-black">
+                SEO
+              </option>
+              <option value="Web Development" className="bg-black">
+                Web Development
+              </option>
+              <option value="Landing Page" className="bg-black">
+                Landing Page
+              </option>
+              <option value="Social Media Marketing" className="bg-black">
+                Social Media Marketing
+              </option>
+              <option value="Google Ads" className="bg-black">
+                Google Ads
+              </option>
+              <option value="Branding" className="bg-black">
+                Branding
+              </option>
+              <option value="AI Solutions" className="bg-black">
+                AI Solutions
+              </option>
+              <option value="Something else" className="bg-black">
+                Something else
+              </option>
             </select>
 
             <textarea

@@ -162,10 +162,7 @@ const Work: React.FC = () => {
                 <div
                   className={`lg:col-span-7 relative ${isEven ? "lg:order-1" : "lg:order-2"}`}
                 >
-                  <Link
-                    href={`/case-studies/${study.id}`}
-                    className="block group"
-                  >
+                  <div className="block group">
                     <div className="img-container relative aspect-[16/10] overflow-hidden rounded-[2rem] border border-white/10">
                       <div className="absolute inset-0 bg-black/20 z-10 group-hover:bg-transparent transition-colors duration-500" />
                       <img
@@ -179,7 +176,7 @@ const Work: React.FC = () => {
                         </span>
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 </div>
 
                 {/* TEXT COLUMN - UPDATED FOR MOBILE CENTERING */}
