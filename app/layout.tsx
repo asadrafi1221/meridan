@@ -52,7 +52,7 @@ export default function RootLayout({
           href="https://wa.me/923151885725"
           target="_blank"
           rel="noopener noreferrer"
-          className="fixed bottom-6 right-6 z-[9999] flex items-center gap-3 bg-[#25D366] hover:bg-[#20ba5a] text-white pl-3 pr-6 py-3 rounded-[50px] shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(37,211,102,0.3)] transition-all duration-300 ease-out hover:-translate-y-1 group"
+          className="fixed bottom-6 right-6 z-[999999999999] flex items-center gap-3 bg-[#25D366] hover:bg-[#20ba5a] text-white pl-3 pr-6 py-3 rounded-[50px] shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(37,211,102,0.3)] transition-all duration-300 ease-out hover:-translate-y-1 group"
           aria-label="Chat on WhatsApp"
         >
           {/* Icon Container */}
