@@ -5,7 +5,6 @@ import { Button } from "@/components/Button";
 import { LocationEdit, Mail, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 import { BRAND_GRADIENT } from "@/constant";
-import emailjs from "@emailjs/browser";
 
 const Contact: React.FC = () => {
   const [form, setForm] = useState({
@@ -31,26 +30,14 @@ const Contact: React.FC = () => {
     e.preventDefault();
     setLoading(true);
 
-    console.log("form :", form);
-
     try {
-      const result = await emailjs.send(
-        process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID!, // Service ID
-        process.env.NEXT_PUBLIC_EMAIL_TEMPLATE!, // Template ID
-        {
-          name: `${form.firstName} ${form.lastName}`,
-          firstName: form.firstName,
-          lastName: form.lastName,
-          email: form.email,
-          phone: form.phone,
-          projectType: form.projectType,
-          message: form.message,
-          time: new Date().toLocaleString(),
-        },
-        process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY!, // Public Key
-      );
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
 
-      if (result.status === 200) {
+      if (res.ok) {
         setForm({
           firstName: "",
           lastName: "",
@@ -60,8 +47,6 @@ const Contact: React.FC = () => {
           message: "",
         });
       }
-    } catch (error) {
-      console.error("EmailJS Error:", error);
     } finally {
       setLoading(false);
     }
