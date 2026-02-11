@@ -5,7 +5,7 @@ interface TiltCardProps {
   children: React.ReactNode;
   className?: string;
   intensity?: number;
-  onPush: () => void;
+  onPush?: () => void;
 }
 
 export const TiltCard: React.FC<TiltCardProps> = ({
